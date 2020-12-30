@@ -14,5 +14,5 @@ install_github("tmorikuicr/espresso")
 ```
 
 ## Usage
-Refer the following vignette for the usage of eSPRESSO package.  
+Refer to the following vignette for the usage of eSPRESSO package.  
 [Vignette](https://tmorikuicr.github.io/espresso/)
