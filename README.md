@@ -2,6 +2,7 @@
 
 `espresso` is a package for domain estimation of cells only from gene expression profile based on graph-structured stochastic self-organizing map (graph-SOM) and Markov chain Monte Carlo (MCMC) method.
 
+<img src="img/fig1.png">
 
 ## Installation and Usage
 
