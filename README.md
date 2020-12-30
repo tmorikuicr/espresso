@@ -6,13 +6,13 @@
 
 ## Installation
 
-To install `espresso` directly from GitHub,
-start R and enter the following commands.
+To install `espresso` directly from GitHub, start R and enter the following commands.
+Please refer to the following vignette when installing from source.
 ```
 library(devtools)
 install_github("tmorikuicr/espresso")
 ```
 
 ## Usage
-Refer the following vignette for the usage of eSPRESSO package.
+Refer the following vignette for the usage of eSPRESSO package.  
 [Vignette](https://tmorikuicr.github.io/espresso/)
