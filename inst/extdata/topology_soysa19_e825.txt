@@ -1,8 +1,0 @@
-	AHF	OFT	RV	LV	Atrial	SV	pSHF
-AHF	0	1	0	0	0	0	1
-OFT	1	0	1	0	0	0	0
-RV	0	1	0	1	0	0	0
-LV	0	0	1	0	1	0	0
-Atrial	0	0	0	1	0	1	0
-SV	0	0	0	0	1	0	1
-pSHF	1	0	0	0	0	1	0
