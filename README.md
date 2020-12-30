@@ -4,7 +4,15 @@
 
 <img src="img/fig1.png">
 
-## Installation and Usage
+## Installation
 
+To install `espresso` directly from GitHub,
+Start R and type the following commands.
+```
+library(devtools)
+install_github("tmorikuicr/espresso")
+```
+
+## Usage
 Refer the following vignette for the usage of eSPRESSO package.
 [Vignette](https://tmorikuicr.github.io/espresso/)
