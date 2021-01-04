@@ -10,9 +10,7 @@ plotUMAP(
   gset = NULL,
   movie = FALSE,
   dir = ".",
-  n_neighbors = 5,
-  n_components = 3,
-  n_epochs = 1000,
+  umap_param = NULL,
   seed = 0,
   windowRect = c(0, 200, 1000, 1200),
   lit = TRUE,
@@ -40,12 +38,6 @@ plotUMAP(
 \item{movie}{whether to make movie.}
 
 \item{dir}{path to the output directory for the movie.}
-
-\item{n_neighbors}{umap parameter of the number of neighbors}
-
-\item{n_components}{umap parameter of the number of components}
-
-\item{n_epochs}{umap parameter of the number of epochs}
 
 \item{seed}{random seed}
 

@@ -351,20 +351,33 @@ rxmcmc <- function(obj, gset = NULL, temp = 1.0, itr = 10, k = 1, seed = 0,
   obj@mcmc[["exchange"]] <- history_ex[-1, ]
   
   best_mean_score <- -1000000
-  idx <- NULL
+  idx <- c()
   for (i in 1:n_repl) {
     s <- obj@mcmc[["max"]][[i]]$mean_score
     if (s[itr * n_ex] > best_mean_score) {
       best_mean_score <- s[itr * n_ex]
-      idx <- i
+      idx <- c(i)
+    } else if (s[itr * n_ex] == best_mean_score) {
+      idx <- c(idx, i)
     }
   }
-  obj@mcmc[["best_genes"]] <- best_genes[[idx]]
-  obj@map <- best_map[[idx]]
-  obj@bmu <- best_bmu[[idx]]
-  obj@score <- best_score[[idx]]
-  obj@summary <- best_summary[[idx]]
-  #obj@mcmc[["history_cand"]] <- history_cand
+  steps <- c()
+  for (i in idx) {
+    steps <- c(steps, which.max(obj@mcmc[["sampling"]][[i]]$mean_score))
+  }
+  best_repl <- as.data.frame(matrix(c(idx, steps), ncol = 2))
+  colnames(best_repl) <- c("repl", "step")
+  obj@mcmc[["final_genes"]] <- best_genes
+  obj@mcmc[["best_genes"]] <- best_genes[idx]
+  obj@mcmc[["best_repl"]] <- best_repl
+  obj@map <- best_map
+  obj@bmu <- best_bmu
+  obj@score <- best_score
+  obj@summary <- best_summary
+  names(obj@map) <- paste0("repl.", 1:n_repl)
+  names(obj@bmu) <- paste0("repl.", 1:n_repl)
+  names(obj@score) <- paste0("repl.", 1:n_repl)
+  names(obj@summary) <- paste0("repl.", 1:n_repl)
   return(obj)
 }
 

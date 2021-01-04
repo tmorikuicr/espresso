@@ -577,7 +577,7 @@ graphSOM <- function(obj, gset = NULL, seed = 0, verbose = TRUE) {
                    ") exceeds the limitation. Check '@nmin' or '@nmax' in an espresso object."))
     obj@summary <- list("mean_score" = NA, "var_score" = NA, "max_score" = NA, "min_score" = NA,
                         "mean_acc" = NA, "var_acc" = NA, "max_acc" = NA, "min_acc" = NA,
-                        "mean_ari" = NA, "var_ari" = NA, "max_ari" = NA, "min_ari" = NA,)
+                        "mean_ari" = NA, "var_ari" = NA, "max_ari" = NA, "min_ari" = NA)
   } else {
     if (verbose == FALSE) {
       suppressMessages(obj <- .trainGraphSOM(obj = obj))

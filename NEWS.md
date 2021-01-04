@@ -1,4 +1,12 @@
-# espressp 0.2.4
+# espresso 0.2.7
+* `selectFeatures()` outputs NOT rejected genes.
+* Modify arguments of `plotUMAP` function.
+* Modify outputs format of RX-MCMC. 
+
+# espresso 0.2.6
+* Fix bugs
+
+# espresso 0.2.4
 * The default value of the parameter `maxRuns` was changed from 1000 to 500 in `selectFeatures` function.
 * Rename variables `rep` to `rept` or `repl`.
 * Add `max_` and `min_` for `score`, `acc`, and `ari` to MCMC results.

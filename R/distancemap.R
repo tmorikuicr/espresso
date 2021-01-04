@@ -24,6 +24,7 @@ plotDistMap <- function(obj, type = "b") {
                main = "Distance of domains")
     } 
     if (type == "s" || type == "b") {
+
       for (i in 1:length(obj@ssets)) {
         # Plot distance maps of samples before GraphSOM ------------------------
         asgmt <- obj@asgmt[match(obj@ssets[[i]], obj@asgmt$sample), ]
@@ -41,7 +42,7 @@ plotDistMap <- function(obj, type = "b") {
         if (length(obj@ssets) == 1) {
           main_title <- "Distance of sample cells"
         } else {
-          main_title <- paste("Distance of sample cells\n(repeat ", i, ")", sep ="")
+          main_title <- paste("Distance of sample cells\n(rept.", i, ")", sep ="")
         }
         pheatmap(sample_dist, 
                  cluster_cols = F, cluster_rows = F, 
@@ -50,46 +51,78 @@ plotDistMap <- function(obj, type = "b") {
                  color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
                  main = main_title
         )
-        
-        # Plot distance maps of samples after GraphSOM -------------------------
-        if (!is.null(obj@bmu)) {
-          domains <- obj@domain2name[obj@bmu[[i]][, ncol(obj@bmu[[i]])], ]$name
-          asgmt2 <- data.frame(domain = domains)
-          rownames(asgmt2) <- names(obj@bmu[[i]][, ncol(obj@bmu[[i]])])
-          sample_dist2 = distmat[unlist(as.matrix(asgmt2)), unlist(as.matrix(asgmt2))]
-          rownames(sample_dist2) = as.character(rownames(asgmt2))
-          colnames(sample_dist2) = as.character(rownames(asgmt2))
-          if (length(obj@ssets) == 1) {
-            main_title <- "Distance of sample cells after GraphSOM"
-          } else {
-            main_title <- paste("Distance of sample cells after GraphSOM\n(repeat ", i, ")", sep = "")
-          }
-          vec <- as.vector(sample_dist2)
-          if (length(unique(vec[!is.na(vec)])) != 1) {
-            pheatmap(sample_dist2,
-                     cluster_cols = F, cluster_rows = F, 
-                     fontsize_row = 5, fontsize_col = 5, 
-                     cellheight = 5, cellwidth = 5, 
-                     color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
-                     main = main_title
-            )
-            # Plot distance maps of samples before/after GraphSOM -------------------
-            ds <- sample_dist
-            ds[upper.tri(ds)] <- sample_dist2[upper.tri(sample_dist2)]
-            if (length(obj@ssets) == 1) {
-              main_title <- "Distance of sample cells \nin original (lower) and after (upper) GraphSOM"
+        for (repl in names(obj@bmu)) {
+          # Plot distance maps of samples after GraphSOM -------------------------
+          if (!is.null(obj@bmu)) {
+            if ( length(grep("repl", names(obj@bmu))) > 0 ) {
+              domains <- obj@domain2name[obj@bmu[[repl]][[i]][, ncol(obj@bmu[[repl]][[i]])], ]$name
+              asgmt2 <- data.frame(domain = domains)
+              rownames(asgmt2) <- names(obj@bmu[[repl]][[i]][, ncol(obj@bmu[[repl]][[i]])])
+              sample_dist2 = distmat[unlist(as.matrix(asgmt2)), unlist(as.matrix(asgmt2))]
+              rownames(sample_dist2) = as.character(rownames(asgmt2))
+              colnames(sample_dist2) = as.character(rownames(asgmt2))
+              if (length(obj@ssets) == 1 && length(obj@bmu) == 1) {
+                main_title <- "Distance of sample cells after GraphSOM"
+              } else if (length(obj@ssets) == 1 && length(obj@bmu) > 1) {
+                main_title <- paste("Distance of sample cells after GraphSOM\n(", repl, ")", sep ="")
+              } else if (length(obj@ssets) > 1 && length(obj@bmu) == 1) {
+                main_title <- paste("Distance of sample cells after GraphSOM\n(rept.", i, ")", sep ="")
+              } else {
+                main_title <- paste("Distance of sample cells after GraphSOM\n(", repl, ", rept.", i, ")", sep ="")
+              }
             } else {
-              main_title <- paste("Distance of sample cells \nin original (lower) and after (upper) GraphSOM\n(repeat ", i, ")", sep = "")
+              domains <- obj@domain2name[obj@bmu[[i]][, ncol(obj@bmu[[i]])], ]$name
+              asgmt2 <- data.frame(domain = domains)
+              rownames(asgmt2) <- names(obj@bmu[[i]][, ncol(obj@bmu[[i]])])
+              sample_dist2 = distmat[unlist(as.matrix(asgmt2)), unlist(as.matrix(asgmt2))]
+              rownames(sample_dist2) = as.character(rownames(asgmt2))
+              colnames(sample_dist2) = as.character(rownames(asgmt2))
+              if (length(obj@ssets) == 1) {
+                main_title <- "Distance of sample cells after GraphSOM"
+              } else {
+                main_title <- paste("Distance of sample cells after GraphSOM\n(rept.", i, ")", sep ="")
+              }
+              
             }
-            pheatmap(ds, 
-                     cluster_cols = F, cluster_rows = F, 
-                     fontsize_row = 5, fontsize_col = 5, 
-                     cellheight = 5, cellwidth = 5, 
-                     color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
-                     main = main_title
-            )
-          } else {
-            warning("Distance map after graph-SOM clustering cannot be drown since only one cluseter was generated.")
+            vec <- as.vector(sample_dist2)
+            if (length(unique(vec[!is.na(vec)])) != 1) {
+              pheatmap(sample_dist2,
+                       cluster_cols = F, cluster_rows = F, 
+                       fontsize_row = 5, fontsize_col = 5, 
+                       cellheight = 5, cellwidth = 5, 
+                       color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
+                       main = main_title
+              )
+              # Plot distance maps of samples before/after GraphSOM -------------------
+              ds <- sample_dist
+              ds[upper.tri(ds)] <- sample_dist2[upper.tri(sample_dist2)]
+              if ( length(grep("repl", names(obj@bmu))) > 0 ) {
+                if (length(obj@ssets) == 1 && length(obj@bmu) == 1) {
+                  main_title <- "Distance of sample cells \nin original (lower) and after (upper) GraphSOM"
+                } else if (length(obj@ssets) == 1 && length(obj@bmu) > 1) {
+                  main_title <- paste("Distance of sample cells \nin original (lower) and after (upper) GraphSOM\n(", repl, ")", sep = "")
+                } else if (length(obj@ssets) > 1 && length(obj@bmu) == 1) {
+                  main_title <- paste("Distance of sample cells \nin original (lower) and after (upper) GraphSOM\n(rept.", i, ")", sep = "")
+                } else {
+                  main_title <- paste("Distance of sample cells \nin original (lower) and after (upper) GraphSOM\n(", repl, ", rept.", i, ")", sep = "")
+                }
+              } else {
+                if (length(obj@ssets) == 1) {
+                  main_title <- "Distance of sample cells \nin original (lower) and after (upper) GraphSOM"
+                } else {
+                  main_title <- paste("Distance of sample cells \nin original (lower) and after (upper) GraphSOM\n(rept.", i, ")", sep = "")
+                }
+              }
+              pheatmap(ds, 
+                       cluster_cols = F, cluster_rows = F, 
+                       fontsize_row = 5, fontsize_col = 5, 
+                       cellheight = 5, cellwidth = 5, 
+                       color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
+                       main = main_title
+              )
+            } else {
+              warning("Distance map after graph-SOM clustering cannot be drown since only one cluseter was generated.")
+            }
           }
         }
       }

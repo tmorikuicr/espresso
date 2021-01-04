@@ -6,9 +6,6 @@
 #' @param gset vector of genes.
 #' @param movie whether to make movie.
 #' @param dir path to the output directory for the movie.
-#' @param n_neighbors umap parameter of the number of neighbors
-#' @param n_components umap parameter of the number of components
-#' @param n_epochs umap parameter of the number of epochs
 #' @param seed random seed
 #' @param windowRect vector of four values indicating the 
 #'                   left, top, right and bottom of 
@@ -33,7 +30,7 @@
 #' 
 plotUMAP <- function(obj, file = "umap.png", gset = NULL, 
                      movie = FALSE, dir = ".",
-                     n_neighbors = 5, n_components = 3, n_epochs = 1000, 
+                     umap_param = NULL,
                      seed = 0,
                      windowRect = c(0, 200, 1000, 1200), 
                      lit =TRUE,
@@ -53,9 +50,16 @@ plotUMAP <- function(obj, file = "umap.png", gset = NULL,
     genes <- obj@gset
   }
   custom_settings = umap.defaults
-  custom_settings$n_neighbors = as.numeric(n_neighbors)
-  custom_settings$n_components = as.numeric(n_components)
-  custom_settings$n_epochs = as.numeric(n_epochs)
+  if (!is.null(umap_param)) {
+    for (i in 1:length(umap_param)) {
+      param <- names(umap_param)[i]
+      if (is.na(match(param, names(custom_settings)))) {
+        warning(paste0("'", param, "' is invalid for the UMAP setting."))
+        next
+      }
+      custom_settings[[param]] <- umap_param[[param]]
+    }
+  }
   sample2domain <- obj@asgmt[match(rownames(obj@exprs), obj@asgmt$sample), ]
   if (is.null(domcol)) {
     domains <- sort(unique(obj@asgmt$domain))

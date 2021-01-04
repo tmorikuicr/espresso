@@ -145,8 +145,7 @@ mm_symbol_v101[["GO:0003209"]][["term"]]
 mm_symbol_v101[["GO:0003209"]][["genes"]]
 
 ## ---- eval = FALSE------------------------------------------------------------
-#  eobj <- graphSOM(eobj, gset = mm_symbol_v101[["GO:0003209"]][["genes"]],
-#                   nsamples = 10, rept = 3)
+#  eobj <- graphSOM(eobj, gset = mm_symbol_v101[["GO:0003209"]][["genes"]])
 
 ## ---- message = FALSE---------------------------------------------------------
 eobj <- initGraphSOM(eobj, nsamples = 10, rept = 1, coef = 0.5)
@@ -159,6 +158,8 @@ eobj <- rxmcmc(eobj, gset = fgenes, itr = 2, n_ex = 5, n_repl = 4)
 eobj@mcmc[["sampling"]][["repl.1"]]
 eobj@mcmc[["max"]][["repl.1"]]
 eobj@mcmc[["exchange"]]
+eobj@mcmc[["final_genes"]]
+eobj@mcmc[["best_repl"]]
 eobj@mcmc[["best_genes"]]
 
 ## ---- fig.width = 8, fig.height = 8, out.width = "45%"------------------------
@@ -171,8 +172,8 @@ plotDistMap(eobj)
 #  plotUMAP(eobj)
 
 ## -----------------------------------------------------------------------------
-plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]],
-         n_neighbors = 5, n_components = 3, n_epochs = 1000)
+plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]][[1]],
+         umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000))
 
 ## ---- echo=FALSE, fig.cap= "UMAP", out.width = '50%'--------------------------
 knitr::include_graphics("umap.png")
@@ -186,8 +187,8 @@ knitr::include_graphics("umap.png")
 #                        RV = "blue",
 #                        SV = "plum"
 #                        )
-#  plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]],
-#           n_neighbors = 5, n_components = 3, n_epochs = 1000,
+#  plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]][[1]],
+#           umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000),
 #           movie = TRUE, domcol = domain_colors)
 #  
 
@@ -195,8 +196,8 @@ knitr::include_graphics("umap.png")
 #  eobj.tmp <- eobj
 #  samples <- eobj.tmp@ssets[["set.1"]]
 #  eobj.tmp@exprs <- eobj.tmp@exprs[match(samples, rownames(eobj.tmp@exprs)), , drop = FALSE]
-#  plotUMAP(eobj.tmp, gset = eobj.tmp@mcmc[["best_genes"]],
-#           n_neighbors = 5, n_components = 3, n_epochs = 1000,
+#  plotUMAP(eobj.tmp, gset = eobj.tmp@mcmc[["best_genes"]][[1]],
+#           umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000),
 #           movie = TRUE, domcol = domain_colors)
 
 ## ---- echo=FALSE, fig.cap= "UMAP", out.width = '50%'--------------------------

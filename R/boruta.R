@@ -14,6 +14,6 @@ selectFeatures <- function(obj, maxRuns = 500) {
   res_boruta <- Boruta(X, Y, getImp = getImpFerns, maxRuns = maxRuns)
   res <- attStats(res_boruta)
   res <- res[order(res$normHits, decreasing = T), ]
-  conf_genes <- rownames(subset(res, decision == "Confirmed"))
+  conf_genes <- rownames(subset(res, decision != "Rejected"))
   return(conf_genes)
 }

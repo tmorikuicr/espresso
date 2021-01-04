@@ -386,8 +386,7 @@ mm_symbol_v101[["GO:0003209"]][["genes"]]
 Thus, `graphSOM` execution using GO genes can be done by
 
 ```{r, eval = FALSE}
-eobj <- graphSOM(eobj, gset = mm_symbol_v101[["GO:0003209"]][["genes"]], 
-                 nsamples = 10, rept = 3)
+eobj <- graphSOM(eobj, gset = mm_symbol_v101[["GO:0003209"]][["genes"]])
 ```
 
 
@@ -418,12 +417,16 @@ The results of RX-MCMC are stored in `espresso` objects and they can be accessed
 * `eobj@mcmc[["sampling"]]`: History of sampling
 * `eobj@mcmc[["max"]]`: History of the samples with the best score
 * `eobj@mcmc[["exchange"]]`: History of replica exchange
+* `eobj@mcmc[["final_genes"]]`: The final genes for each replicas
+* `eobj@mcmc[["best_repl"]]`: Information of the best replicas
 * `eobj@mcmc[["best_genes"]]`: The best genes
 
 ```{r}
 eobj@mcmc[["sampling"]][["repl.1"]]
 eobj@mcmc[["max"]][["repl.1"]]
 eobj@mcmc[["exchange"]]
+eobj@mcmc[["final_genes"]]
+eobj@mcmc[["best_repl"]]
 eobj@mcmc[["best_genes"]]
 ```
 
@@ -454,12 +457,13 @@ in 3D space. If `gset = NULL`, UMAP is performed with genes stored in `@gset`.
 plotUMAP(eobj)
 ```
 
-This function imports `umap` packages, thus several parameters for UMAP computation can be
-given according to the original package.
+This function imports `umap` packages, thus all parameters for UMAP computation can be
+given according to the original package. 
+When using custom settings for UMAP, give the UMAP parameters `umap_param` as a list to `plotUMAP` by the following way.
 
 ```{r}
-plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]],
-         n_neighbors = 5, n_components = 3, n_epochs = 1000)
+plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]][[1]],
+         umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000))
 ```
 
 ```{r, echo=FALSE, fig.cap= "UMAP", out.width = '50%'}
@@ -480,8 +484,8 @@ domain_colors <- list(AHF = "orange",
                       RV = "blue",
                       SV = "plum"
                       )
-plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]],
-         n_neighbors = 5, n_components = 3, n_epochs = 1000,
+plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]][[1]],
+         umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000),
          movie = TRUE, domcol = domain_colors)
 
 ```
@@ -493,8 +497,8 @@ If you want to plot UMAP with downsampled sets, the following script can work.
 eobj.tmp <- eobj
 samples <- eobj.tmp@ssets[["set.1"]]
 eobj.tmp@exprs <- eobj.tmp@exprs[match(samples, rownames(eobj.tmp@exprs)), , drop = FALSE]
-plotUMAP(eobj.tmp, gset = eobj.tmp@mcmc[["best_genes"]],
-         n_neighbors = 5, n_components = 3, n_epochs = 1000,
+plotUMAP(eobj.tmp, gset = eobj.tmp@mcmc[["best_genes"]][[1]],
+         umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000),
          movie = TRUE, domcol = domain_colors)
 ```
 
