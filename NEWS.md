@@ -1,6 +1,9 @@
+## 1.0.0
+* Add an option `version` to `graphSOM` and `rxmcmc` functions in order to enable us to perform SOM computations based on the previous version (= 0.2.17).
+
 ## 0.2.17
 * Add options `size_d` and `size_s` to `plotDistMap` function.
-# Add options `color_by_group`, `grpcol`, and `magnify` to `plotUMAP` function.
+* Add options `color_by_group`, `grpcol`, and `magnify` to `plotUMAP` function.
 
 ## 0.2.16
 * Replace graphSOM and rxmcmc functions of v.0.2.15 with those of v.0.2.14

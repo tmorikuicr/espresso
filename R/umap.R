@@ -8,7 +8,7 @@
 #' @importFrom uwot umap
 #' @export
 runUMAP <- function(obj, umap_param = NULL, gset = NULL, seed = 0) {
-  set.seed(as.numeric(seed))
+  set.seed(as.numeric(seed), kind = "Mersenne-Twister")
   if (!is.null(gset)) {
     gset <- gset[!is.na(match(gset, colnames(obj@exprs)))]
     genes <- gset

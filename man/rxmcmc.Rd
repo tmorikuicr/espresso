@@ -15,7 +15,8 @@ rxmcmc(
   n_ex = 10,
   n_repl = detectCores(),
   n_ig = 3,
-  fact = NULL
+  fact = NULL,
+  version = NULL
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ rxmcmc(
 \item{n_ig}{Number of initial genes randomly selected for MCMC.}
 
 \item{fact}{Scaling factor for computing selection probability.}
+
+\item{version}{Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0.2.17")}
 }
 \value{
 \code{espresso} object

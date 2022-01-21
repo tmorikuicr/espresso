@@ -207,6 +207,7 @@
 #' @param n_repl Number of replicas (default: \code{detectCores()}).
 #' @param n_ig Number of initial genes randomly selected for MCMC.
 #' @param fact Scaling factor for computing selection probability.
+#' @param version Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0.2.17")
 #' @import doParallel
 #' @import parallel
 #' @import foreach
@@ -215,14 +216,18 @@
 #' @export 
 #'
 rxmcmc <- function(obj, gset = NULL, temp = 1.0, itr = 10, k = 1, seed = NULL, 
-                   n_cl = detectCores(), n_ex = 10, n_repl = detectCores(), n_ig = 3, fact = NULL) {
+                   n_cl = detectCores(), n_ex = 10, n_repl = detectCores(), n_ig = 3, fact = NULL, version = NULL) {
   if (!is.null(seed)) {
-    set.seed(seed)
+    set.seed(seed, kind = "Mersenne-Twister")
   } else {
     seed <- 0
   }
   if (is.null(gset)) {
     warning("Input `gset` to be optimized.")
+    return(obj)
+  }
+  if (version != "0.2.17" && !is.null(version)) {
+    stop(paste("version", version, "is not available."))
     return(obj)
   }
   gset0 <- gset
@@ -283,13 +288,24 @@ rxmcmc <- function(obj, gset = NULL, temp = 1.0, itr = 10, k = 1, seed = NULL,
       }
       n_sets <- length(cand_sets)
       res <- .generateDataFrameForRXMCMC(1, n_sets)[[1]]
-      for (l in 1:n_sets) {
-        res_tmp <- graphSOM(obj, gset = cand_sets[[l]], verbose = FALSE)
-        res[l, ] <- c(as.numeric(unlist(res_tmp@summary)), length(cand_sets[[l]]))
-        map_tmp[[l]] <- res_tmp@map
-        bmu_tmp[[l]] <- res_tmp@bmu
-        score_tmp[[l]] <- res_tmp@score
-        summary_tmp[[l]] <- res_tmp@summary
+      if (is.null(version)) {
+        for (l in 1:n_sets) {
+          res_tmp <- graphSOM(obj, gset = cand_sets[[l]], verbose = FALSE, seed = seed)
+          res[l, ] <- c(as.numeric(unlist(res_tmp@summary)), length(cand_sets[[l]]))
+          map_tmp[[l]] <- res_tmp@map
+          bmu_tmp[[l]] <- res_tmp@bmu
+          score_tmp[[l]] <- res_tmp@score
+          summary_tmp[[l]] <- res_tmp@summary
+        }
+      } else if (version == "0.2.17"){
+        for (l in 1:n_sets) {
+          res_tmp <- graphSOM(obj, gset = cand_sets[[l]], verbose = FALSE, version = "0.2.17")
+          res[l, ] <- c(as.numeric(unlist(res_tmp@summary)), length(cand_sets[[l]]))
+          map_tmp[[l]] <- res_tmp@map
+          bmu_tmp[[l]] <- res_tmp@bmu
+          score_tmp[[l]] <- res_tmp@score
+          summary_tmp[[l]] <- res_tmp@summary
+        }
       }
       probs <- .definePriorDistr(res, fact)
       idx <- .sampleGeneSet(probs)

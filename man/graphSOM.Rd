@@ -4,7 +4,7 @@
 \alias{graphSOM}
 \title{Run GraphSOM clustering.}
 \usage{
-graphSOM(obj, gset = NULL, seed = NULL, verbose = TRUE)
+graphSOM(obj, gset = NULL, seed = NULL, verbose = TRUE, version = NULL)
 }
 \arguments{
 \item{obj}{The \code{espresso} object.}
@@ -14,6 +14,8 @@ graphSOM(obj, gset = NULL, seed = NULL, verbose = TRUE)
 \item{seed}{Random seed.}
 
 \item{verbose}{Whether to show messages.}
+
+\item{version}{Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0.2.17")}
 }
 \value{
 \code{espresso} object

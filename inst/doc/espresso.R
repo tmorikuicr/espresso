@@ -6,7 +6,7 @@ knitr::opts_chunk$set(
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  # Installation (X.X.X is a version number)
-#  install.packages("espresso_X.X.X.tar.gz", repos = NULL, type = "source")
+#  install.packages("espresso-X.X.X.tar.gz", repos = NULL, type = "source")
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  # Installation example of CRAN packages
@@ -21,6 +21,10 @@ knitr::opts_chunk$set(
 #      install.packages("BiocManager")
 #  
 #  BiocManager::install(c("biomaRt","GO.db"))
+
+## ---- eval = FALSE------------------------------------------------------------
+#  library(devtools)
+#  install_github("tmorikuicr/espresso")
 
 ## -----------------------------------------------------------------------------
 version
@@ -41,7 +45,7 @@ packageVersion("plotrix")
 packageVersion("biomaRt")
 packageVersion("GO.db")
 
-## ----message=FALSE, warning=FALSE, include=FALSE------------------------------
+## ----message = FALSE, warning = FALSE, include = FALSE------------------------
 library(espresso)
 set.seed(123)
 
@@ -60,9 +64,9 @@ set.seed(123)
 
 ## -----------------------------------------------------------------------------
 # Get paths of input files
-path_exprs <- system.file("extdata", "exprs_soysa19_e825.txt", package="espresso")
-path_topology <- system.file("extdata", "topology_soysa19_e825.txt", package="espresso")
-path_asgmt <- system.file("extdata", "asgmt_soysa19_e825.txt", package="espresso")
+path_exprs <- system.file("extdata", "exprs_soysa19_e825.txt", package = "espresso")
+path_topology <- system.file("extdata", "topology_soysa19_e825.txt", package = "espresso")
+path_asgmt <- system.file("extdata", "asgmt_soysa19_e825.txt", package = "espresso")
 
 # Load data
 exprs <- t(read.table(path_exprs, header = TRUE, row.names = 1, sep = "\t", 
@@ -83,15 +87,15 @@ str(eobj)
 
 ## ---- eval = FALSE------------------------------------------------------------
 #  # Log-scaling of the expression profile
-#  # In this example, log-scalling is unnecessary since the expression values is already log-scalled.
+#  # In this example, log-scaling is unnecessary since the expression values is already log-scaled.
 #  # eobj <- logScale(eobj)
 
 ## -----------------------------------------------------------------------------
-# Filter out genes with low expresssion and low variance
+# Filter out genes with low expression and low variance
 eobj <- filterGenes(eobj)
 
 ## ---- eval = FALSE------------------------------------------------------------
-#  # Filter out genes with low expresssion and low variance
+#  # Filter out genes with low expression and low variance
 #  eobj <- filterGenes(eobj, ncell = 2, expressed = 1.0, sd = 0.05)
 
 ## ---- eval = FALSE------------------------------------------------------------
@@ -242,7 +246,7 @@ plotUMAP(eobj, domcol = domain_colors, file = "umap_3D_color1.png", size = 1.5)
 knitr::include_graphics("umap_3D_color1.png")
 
 ## -----------------------------------------------------------------------------
-path_group <- system.file("extdata", "group_soysa19_e825.txt", package="espresso")
+path_group <- system.file("extdata", "group_soysa19_e825.txt", package = "espresso")
 group <- read.table(path_group, header = T, as.is = TRUE)
 head(group)
 group_colors <- list(FHF = "orange", SHF = "blue")
@@ -270,6 +274,12 @@ knitr::include_graphics("umap_3D_color3.png")
 
 ## ---- echo=FALSE, fig.cap= "UMAP", out.width = '50%'--------------------------
 knitr::include_graphics("umap.all.png")
+
+## ---- eval = FALSE------------------------------------------------------------
+#  graphSOM(eobj, gset = fgenes, seed = 0, version = "0.2.17")
+
+## ---- eval = FALSE------------------------------------------------------------
+#  rxmcmc(eobj, gset = fgenes, itr = 2, n_ex = 5, n_repl = 4, n_cl = 4, seed = 0, version = "0.2.17")
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  library(biomaRt)

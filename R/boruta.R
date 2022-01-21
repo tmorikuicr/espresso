@@ -14,7 +14,7 @@
 #' 
 selectFeatures <- function(obj, maxRuns = 500, decision = "nr", seed = NULL) {
   if (!is.null(seed)) {
-    set.seed(seed)
+    set.seed(seed, kind = "Mersenne-Twister")
   }
   X <- obj@exprs
   Y <- as.factor(obj@asgmt[, "domain"])

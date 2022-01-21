@@ -1,5 +1,9 @@
 # eSPRESSO
 
+21-Jan-2022: espresso 1.0.0 released.
+
+<br/>
+
 `espresso` is a package for domain estimation of cells only from gene expression profile based on graph-structured stochastic self-organizing map (graph-SOM) and Markov chain Monte Carlo (MCMC) method.
 
 <img src="img/fig1.png">
@@ -18,5 +22,5 @@ install_github("tmorikuicr/espresso")
 ```
 
 ## Usage
-Refer to the following documentation for the usage of eSPRESSO package.  
+Refer to the following documentation for the usage of `espresso` package.  
 [Vignette](https://tmorikuicr.github.io/espresso/)

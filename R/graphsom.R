@@ -590,7 +590,7 @@ initGraphSOM <- function(obj, nsamples = NULL, rept = 1,
                          stochastic = TRUE, rmin = 0.5, rmax = 1.0, nmin = 1, nmax = NULL,
                          map_method = "sample", bmu_method = "min", coef = 1.0, swap = TRUE, seed = NULL) {
   if (!is.null(seed)) {
-    set.seed(as.numeric(seed))
+    set.seed(as.numeric(seed), kind = "Mersenne-Twister")
   }
   obj <- .genSampleSets(obj = obj, nsamples = nsamples, rept = as.integer(rept))
   obj <- .initGraphSOM(obj = obj, lsteps = as.integer(lsteps), radius = radius, 
@@ -607,12 +607,22 @@ initGraphSOM <- function(obj, nsamples = NULL, rept = 1,
 #' @param gset Gene set.
 #' @param seed Random seed.
 #' @param verbose Whether to show messages.
+#' @param version Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0.2.17")
 #' @return \code{espresso} object
 #' @export 
 #' 
-graphSOM <- function(obj, gset = NULL, seed = NULL, verbose = TRUE) {
-  if (!is.null(seed)) {
-    set.seed(seed)
+graphSOM <- function(obj, gset = NULL, seed = NULL, verbose = TRUE, version = NULL) {
+  if (is.null(version)) {
+    if (!is.null(seed)) {
+      set.seed(seed, kind = "L'Ecuyer-CMRG")
+    }
+  } else if (version == "0.2.17") {
+    if (!is.null(seed)) {
+      set.seed(seed, kind = "Mersenne-Twister")
+    }
+  } else {
+    stop(paste("version", ver, "is not available."))
+    return(obj)
   }
   if (!is.null(gset)) {
     obj@gset <- gset[!is.na(match(gset, colnames(obj@exprs)))]
