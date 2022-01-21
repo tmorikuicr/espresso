@@ -2,7 +2,7 @@
 % Please edit documentation in R/graphsom.R
 \name{.initGraphSOM}
 \alias{.initGraphSOM}
-\title{Initialize an espresso object}
+\title{Initialize an \code{espresso} object.}
 \usage{
 .initGraphSOM(
   obj,
@@ -16,47 +16,50 @@
   bmu_method,
   coef,
   nmin,
-  nmax
+  nmax,
+  swap
 )
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{gset}{vector of genes}
+\item{gset}{Gene set.}
 
-\item{radius}{initial value of learning radius 
+\item{radius}{Initial value of learning radius 
 (default: the maximum distance of input toplology).}
 
-\item{lsteps}{the number of learning steps.}
+\item{lsteps}{Number of learning steps.}
 
-\item{stochastic}{if \code{stochastic = TRUE}, 
+\item{stochastic}{If \code{stochastic = TRUE}, 
  GraphSOM clustering introduces stochasticity 
 for map update (default: TRUE).}
 
-\item{rmin}{the minimum value of scale factor for the stochastic map update.}
+\item{rmin}{Minimum value of scale factor for the stochastic map update.}
 
-\item{rmax}{the maximum value of scale factor for the stochastic map update.}
+\item{rmax}{Maximum value of scale factor for the stochastic map update.}
 
-\item{map_method}{map initialization method.
+\item{map_method}{Map initialization method.
 The map vector is initilaized 
 by input data if 'sample' is selected. 
 Otherwise, it is initialized by 
 uniformly distributed random values (default: 'sample').}
 
-\item{bmu_method}{bmu selection method.
+\item{bmu_method}{BMU selection method.
 If the unit adjacent to the BMU candidate is empty,
 it is set as BMU ('fill'). 
 Otherwise, the most similar unit to input data 
 is selected as BMU (default: 'min').}
 
-\item{coef}{coefficient of ARI for score computation.}
+\item{coef}{Coefficient of ARI for score computation.}
 
-\item{nmin}{the minimum number of genes can be analyzed.}
+\item{nmin}{Minimum number of genes can be analyzed.}
 
-\item{nmax}{the maximum number of genes can be analyzed.}
+\item{nmax}{Maximum number of genes can be analyzed.}
+
+\item{swap}{Logical value determins whether to swap domains or not (default: TRUE)}
 }
 \value{
-espresso object
+\code{espresso} object
 }
 \description{
 This function initializes an espresso object 

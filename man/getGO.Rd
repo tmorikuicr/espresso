@@ -2,22 +2,22 @@
 % Please edit documentation in R/go.R
 \name{getGO}
 \alias{getGO}
-\title{Get Gene Ontology information}
+\title{Get Gene Ontology information.}
 \usage{
 getGO(species, gid, version = NULL)
 }
 \arguments{
-\item{species}{species name used in biomaRt (e.g., mmusculus, hsapiens).}
+\item{species}{Species name used in biomaRt (e.g., mmusculus, hsapiens).}
 
-\item{gid}{gene identifier (e.g., mgi_symbol, hgnc_symbol).}
+\item{gid}{Gene identifier (e.g., mgi_symbol, hgnc_symbol).}
 
 \item{version}{Ensembl release version. 
-If \code{versopn} is NULL, the latest version is downloaded.}
+If \code{version = NULL}, the latest version is downloaded.}
 }
 \value{
-list of GO information
+List of GO information.
 }
 \description{
-This function gets Gene Ontology (GO) information via 
+This function gets GO information via 
              BioMart and Ensembl databases.
 }

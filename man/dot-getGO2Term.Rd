@@ -2,18 +2,17 @@
 % Please edit documentation in R/go.R
 \name{.getGO2Term}
 \alias{.getGO2Term}
-\title{Get Gene Ontology terms}
+\title{Get Gene Ontology terms.}
 \usage{
 .getGO2Term(ds)
 }
 \arguments{
-\item{ds}{dataset to be accessed via biomaRt.}
+\item{ds}{Dataset to be accessed via biomaRt.}
 }
 \value{
-data.frame whose the 1st and 2nd columns indicate 
+Data frame whose the first and second columns indicate 
         GO ID and terms, respectively.
 }
 \description{
-This function gets terms of Gene Ontology 
-             via BioMart database.
+This function gets GO terms via BioMart database.
 }

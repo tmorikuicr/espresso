@@ -1,11 +1,10 @@
 # =============================================================================
-#' @title Get Gene Ontology terms
-#' @description This function gets terms of Gene Ontology 
-#'              via BioMart database.
-#' @param ds dataset to be accessed via biomaRt.
-#' @return data.frame whose the 1st and 2nd columns indicate 
-#'         GO ID and terms, respectively.
+#' @title Get Gene Ontology terms.
+#' @description This function gets GO terms via BioMart database.
+#' @param ds Dataset to be accessed via biomaRt.
 #' @importFrom biomaRt getBM
+#' @return Data frame whose the first and second columns indicate 
+#'         GO ID and terms, respectively.
 #' 
 .getGO2Term <- function(ds){
   message("Downloading GO IDs and terms...")
@@ -18,11 +17,11 @@
 }
 
 # =============================================================================
-#' @title Get offsprings of each Gene Ontology
-#' @description This function gets Gene Ontology and 
-#'              thier offsprings information via \code{GO.db}.
-#' @param terms dataframe of GO terms.
-#' @return list of GOs and their offsprings. 
+#' @title Get offsprings of each Gene Ontology.
+#' @description This function gets GO and 
+#'              thier offspring information via \code{GO.db}.
+#' @param terms Data frame of GO terms.
+#' @return List of GOs and their offsprings. 
 #' @importFrom GO.db GOBPOFFSPRING GOMFOFFSPRING GOCCOFFSPRING
 #' @import progress
 #' 
@@ -45,12 +44,11 @@
 }
 
 # =============================================================================
-#' @title Get gene information
-#' @description This function gets gene information for each GO 
-#'              via BioMart database.
-#' @param obj espresso object.
-#' @param ds dataset to be accessed via biomaRt.
-#' @return list of GO and genes
+#' @title Get gene information.
+#' @description This function gets gene information for each GO via BioMart database.
+#' @param obj The \code{espresso} object.
+#' @param ds Dataset to be accessed via biomaRt.
+#' @return List of GO and genes
 #' @importFrom biomaRt getBM
 #' @importFrom stats na.omit
 #' @import progress
@@ -84,20 +82,20 @@
 }
 
 # =============================================================================
-#' @title Get Gene Ontology information
-#' @description This function gets Gene Ontology (GO) information via 
+#' @title Get Gene Ontology information.
+#' @description This function gets GO information via 
 #'              BioMart and Ensembl databases.
-#' @param species species name used in biomaRt (e.g., mmusculus, hsapiens).
-#' @param gid gene identifier (e.g., mgi_symbol, hgnc_symbol).
+#' @param species Species name used in biomaRt (e.g., mmusculus, hsapiens).
+#' @param gid Gene identifier (e.g., mgi_symbol, hgnc_symbol).
 #' @param version Ensembl release version. 
-#'                If \code{versopn} is NULL, the latest version is downloaded.
-#' @return list of GO information
+#'                If \code{version = NULL}, the latest version is downloaded.
+#' @return List of GO information.
 #' @importFrom biomaRt useEnsembl getBM
 #' @export
 #' 
 getGO <- function(species, gid, version = NULL){
   obj <- list(species = species, gid = gid)
-  if (is.null(version)){
+  if (is.null(version)) {
     message("Use Ensembl database (latest release) via biomaRt.")
   } else {
     message(paste0("Use Ensembl database (release", version, ") via biomaRt."))

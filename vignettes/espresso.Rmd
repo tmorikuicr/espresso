@@ -2,8 +2,10 @@
 title: "espresso"
 author: "Tomoya Mori"
 date: "`r Sys.Date()`"
-output: 
-  rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+  toc: true
+  toc_depth: 3
 vignette: >
   %\VignetteIndexEntry{espresso}
   %\VignetteEngine{knitr::rmarkdown}
@@ -40,7 +42,7 @@ __CRAN packages__
 * igraph
 * mclust
 * progress
-* umap
+* uwot
 * rgl
 * rFerns
 * Boruta
@@ -48,12 +50,15 @@ __CRAN packages__
 * foreach
 * pheatmap
 * RColorBrewer
+* scatterplot3d
+* tagcloud
+* plotrix
 
 ```{r, eval = FALSE}
 # Installation example of CRAN packages
-install.packages(c("igraph", "mclust", "progress",
-                   "umap", "rgl", "rFerns", "Boruta",
-                   "doParallel", "foreach", "pheatmap", "RColorBrewer"), 
+install.packages(c("igraph", "mclust", "progress", "uwot", "rgl", 
+                   "rFerns", "Boruta", "doParallel", "foreach", "pheatmap", 
+                   "RColorBrewer", "scatterplot3d", "tagcloud", "plotrix"), 
                  dependencies = TRUE)
 ```
 
@@ -86,7 +91,7 @@ version
 packageVersion("igraph")
 packageVersion("mclust")
 packageVersion("progress")
-packageVersion("umap")
+packageVersion("uwot")
 packageVersion("rgl")
 packageVersion("rFerns")
 packageVersion("Boruta")
@@ -94,6 +99,9 @@ packageVersion("doParallel")
 packageVersion("foreach")
 packageVersion("pheatmap")
 packageVersion("RColorBrewer")
+packageVersion("scatterplot3d")
+packageVersion("tagcloud")
+packageVersion("plotrix")
 packageVersion("biomaRt")
 packageVersion("GO.db")
 ```
@@ -108,7 +116,7 @@ The details of these inputs are explained in the later section.
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 library(espresso)
-set.seed(0)
+set.seed(123)
 ```
 
 ```{r, eval = FALSE}
@@ -274,10 +282,28 @@ all samples of the domain are selected.
 The `rept` is the number of repeats for GraphSOM clustering with different sample sets.
 
 In addition, the `coef` is the coefficient of ARI value for score function. 
-The GraphSOM results are evaluated by prediction accuracy, ARI, and a score function (= accuracy + `coef` * ARI).
+The GraphSOM results are evaluated by prediction accuracy, ARI, and a score function (= accuracy + `coef` * ARI). 
+The default is `coef = 1.0`.
 
 ```{r}
 eobj <- initGraphSOM(eobj, nsamples = 10, coef = 0.5, rept = 3)
+```
+
+If the sample set after downsampling needs to be fixed, set a value to the parameter `seed`.
+
+__Note__
+
+Even if the same random seed is given, the selected samples may differ depending on the version of R.
+
+```{r, eval = FALSE}
+eobj <- initGraphSOM(eobj, nsamples = 10, coef = 0.5, rept = 3, seed = 0)
+```
+
+From the version 0.2.8, GraphSOM clustering introduces the cluster swap method by default.
+If the cluseter swap method is not needed, set `FALSE` to the option `swap` of `initGraphSOM` function.
+
+```{r, eval = FALSE}
+eobj <- initGraphSOM(eobj, nsamples = 10, coef = 0.5, rept = 3, swap = FALSE, seed = 0)
 ```
 
 After initializing GraphSOM setting, GraphSOM can be executed.
@@ -296,7 +322,7 @@ eobj <- graphSOM(eobj, gset = c("Actn2", "Hand2", "Vegfb", "Wnt5a"))
 ```
 
 In addition to these, `graphSOM` has several parameters, so please refer to 
-the manual for their details.  
+the manual for their details.
   
 The `graphSOM` clustering results can be shown by the following.
 
@@ -341,9 +367,23 @@ fgenes <- selectFeatures(eobj, maxRuns = 100)
 fgenes
 ```
 
-The parameter `maxRuns` is the maximum number of importance source runs (refer the manual of `Boruta` pacakage).
-This function returns a vector of "confirmed" genes as features.
-In order to resolve genes left as "tentative", `maxRuns` may be increased.
+Please note that the result of `Borta` depends on random seed. 
+Thus, if the results need to be fixed, set a value to the parameter `seed`.
+
+```{r, eval = FALSE}
+fgenes <- selectFeatures(eobj, maxRuns = 100, seed = 0)
+```
+
+`Boruta` classifies genes into the three categories, "Confirmed", "Tentative", and "Rejected", according to their importance.
+This function returns a vector of "NOT Rejected" genes as features by default.
+If only "Confirmed" genes are required, set `"c"` to the parameter `decision`.
+
+```{r, eval = FALSE}
+fgenes <- selectFeatures(eobj, maxRuns = 100, decision = "c", seed = 0)
+```
+
+In order to resolve genes left as "Tentative", `maxRuns` may be increased,
+where the parameter `maxRuns` is the maximum number of importance source runs (refer the manual of `Boruta` pacakage).
 Empirically, it is good to determine the parameters so that around 100 genes are selected.
 
 
@@ -360,13 +400,13 @@ data(mm_symbol_v101)
 data(hs_symbol_v101)
 ```
 
-If aother version, another species, or another gene idenfier are required,
+If another version, another species, or another gene idenfier are required,
 the following command enable a user to create another gene set via R `biomaRt` package.
 The parameters to be set to `species` are `gid` according to `biomaRt`.
 Note that if the latest version is required, please do not specify `version` in the function.
 
 ```{r, eval = FALSE}
-# Get GO infomation
+# Get GO information
 hs_symbol_v98 <- getGO(species = 'hsapiens', gid = 'hgnc_symbol', version = '98')
 
 # Save 'hs_symbol_v98' as an R data file.
@@ -390,7 +430,7 @@ eobj <- graphSOM(eobj, gset = mm_symbol_v101[["GO:0003209"]][["genes"]])
 ```
 
 
-## Gene set optimization by replica exchange Marcov chain Monte Carlo method (RX-MCMC).
+## Gene set optimization by replica exchange Markov chain Monte Carlo method (RX-MCMC).
 
 `espresso` optimizes gene sets by replica exchange Markov chain Monte Carlo method (RX-MCMC).
 The parameters `itr`, `n_ex`, and `n_repl` are the number of iterations of MCMC until each replica exchange, 
@@ -412,6 +452,12 @@ Note that the length of `fgenes` must be larger than `n_ig`.
 eobj <- rxmcmc(eobj, gset = fgenes, itr = 2, n_ex = 5, n_repl = 4, n_cl = 4, n_ig = 3)
 ```
 
+The random seed can be fixed by the `seed` option in the `rxmcmc` function.
+
+```{r, eval = FALSE}
+eobj <- rxmcmc(eobj, gset = fgenes, itr = 2, n_ex = 5, n_repl = 4, n_cl = 4, n_ig = 3, seed = 0)
+```
+
 The results of RX-MCMC are stored in `espresso` objects and they can be accessed by `@mcmc`.
 
 * `eobj@mcmc[["sampling"]]`: History of sampling
@@ -430,6 +476,12 @@ eobj@mcmc[["best_repl"]]
 eobj@mcmc[["best_genes"]]
 ```
 
+The results of RX-MCMC can be also obtained as text files as follows, where
+`dir` is a path to an output directory.
+
+```{r, eval = FALSE}
+writeMCMC(eobj, dir = "output")
+```
 
 The histories of RX-MCMC optimization and replica exchanges can be plotted by 
 `plotMCMC` function.
@@ -444,38 +496,94 @@ plotMCMC(eobj)
 In order to visualize the distance between domains and between cell samples before/after clustering for all replications,
 `espresso` provides `plotDistMap`. The usage is quite simple.
 ```{r, fig.width = 8, fig.height = 8, out.width = "45%"}
-plotDistMap(eobj)
+# size_d: The font and cell sizes for distance map of domains (default: NULL).
+# size_s: The font and cell sizes for distance map of cell samples (default: 5).
+plotDistMap(eobj, size_s = 5)
 ```
 
-
-## Plot UMAP
+## Compute and plot UMAP
 `espresso` provides a function for dimension reduction method named 
 Uniform Manifold Approximation and Projection (UMAP) to show the distribution of the cell samples 
-in 3D space. If `gset = NULL`, UMAP is performed with genes stored in `@gset`.
-
-```{r, eval = FALSE}
-plotUMAP(eobj)
-```
-
-This function imports `umap` packages, thus all parameters for UMAP computation can be
-given according to the original package. 
-When using custom settings for UMAP, give the UMAP parameters `umap_param` as a list to `plotUMAP` by the following way.
+in 2D or 3D space (the default space is 2D).
+To compute and plot UMAP, use `runUMAP` and `plotUMAP` functions, respectively.
+The UMAP result is stored `@umap`.
 
 ```{r}
-plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]][[1]],
-         umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000))
+eobj <- runUMAP(eobj)
+head(eobj@umap)
+plotUMAP(eobj, file = 'umap_2D.png')
 ```
+
+
+```{r, echo = FALSE, fig.cap= "UMAP", out.width = '50%'}
+knitr::include_graphics("umap_2D.png")
+```
+
+This function imports `uwot` packages, thus all parameters for UMAP computation can be
+given according to the original package. 
+When using custom settings for UMAP, give the UMAP parameters `umap_param` as a list to `runUMAP` by the following way.
+For the details of the parameters, refer to `uwot::umap` function.
+The feature genes can be given by `gset` parameter while 
+UMAP is performed with genes stored in `@gset` if `gset = NULL`.
+
+```{r}
+eobj <- runUMAP(eobj, gset = eobj@mcmc[["best_genes"]][[1]],
+                umap_param = list("n_neighbors" = 15, "n_components" = 3, "n_epochs" = 1000))
+head(eobj@umap)
+# size: the size for plotted points.
+# magnify: Multiplicative factor to apply to size of window when producing legend (default: 1).
+plotUMAP(eobj, size = 1.5, magnify = 1, file = "umap_3D.png") 
+```
+
 
 ```{r, echo=FALSE, fig.cap= "UMAP", out.width = '50%'}
-knitr::include_graphics("umap.png")
+knitr::include_graphics("umap_3D.png")
 ```
 
-If `movie = TRUE`, a movie of the resulting UMAP is generated.
-In addition, plotting colors can be changed by any colors.
-Please refer the manual for more details.
+Although the `plotUMAP` imports `rgl` package,
+`scatterplot3d` package can be used instead of `rgl` by `rgl = FALSE` (default: `TRUE`) when `rgl` is not available.
 
+```{r}
+plotUMAP(eobj, file = "umap_3D_scatterplot.png", rgl = FALSE)
+```
+
+
+```{r, echo=FALSE, fig.cap= "UMAP", out.width = '50%'}
+knitr::include_graphics("umap_3D_scatterplot.png")
+```
+
+The export format is automatically detected from its extension (Supported: png, pdf, eps)
 
 ```{r, eval = FALSE}
+plotUMAP(eobj, file = 'umap.pdf')
+```
+
+The RGL window can be closed after plotting by `rglclose = TRUE`.
+```{r, eval = FALSE}
+plotUMAP(eobj, file = 'umap.pdf', rglclose = TRUE)
+```
+
+The file saving can be suppress by `save = FALSE`.
+This is useful when you want to use `png()`, `pdf()`, and `postscript()` 
+functions directly in order to specify their parameters (e.g., `width`, `height`, and so on) manually.
+
+```{r, eval = FALSE}
+pdf(file = 'umap.pdf', width = 6, height = 6)
+plotUMAP(eobj, save = FALSE)
+dev.off()
+```
+
+__Note__
+
+When the exported format is 'pdf' or 'eps', and `rgl = TRUE`, 
+the legend information is not printed due to the design of `rgl` package.
+
+
+### Other options of UMAP plotting
+
+Plotting colors can be changed by any colors according to the domains.
+
+```{r}
 domain_colors <- list(AHF = "orange",
                       Atrial = "pink",
                       LV = "green",
@@ -484,10 +592,59 @@ domain_colors <- list(AHF = "orange",
                       RV = "blue",
                       SV = "plum"
                       )
-plotUMAP(eobj, gset = eobj@mcmc[["best_genes"]][[1]],
-         umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000),
-         movie = TRUE, domcol = domain_colors)
+plotUMAP(eobj, domcol = domain_colors, file = "umap_3D_color1.png", size = 1.5)
+```
 
+```{r, echo=FALSE, fig.cap= "UMAP", out.width = '50%'}
+knitr::include_graphics("umap_3D_color1.png")
+```
+
+Color coding in groups different from the domains is possible with the `color_by_group` and `grpcol` options.
+The `color_by_group` must be a `data.frame` given by the followin format.
+
+|         |          |
+|:--------|:--------:|
+| sample  | group    |
+| Cell 1  | Group 1  |
+| Cell 2  | Group 2  |
+| Cell 3  | Group 1  |
+| Cell 4  | Group 4  |
+| ...     | ...      |
+
+The color of each group can be specified by `grpcol` of the same format as `domcol`.
+The following is an example.
+
+```{r}
+path_group <- system.file("extdata", "group_soysa19_e825.txt", package="espresso")
+group <- read.table(path_group, header = T, as.is = TRUE)
+head(group)
+group_colors <- list(FHF = "orange", SHF = "blue")
+plotUMAP(eobj, color_by_group = group, grpcol = group_colors, size = 1.5, file = "umap_3D_color2.png")
+```
+
+```{r, echo=FALSE, fig.cap= "UMAP", out.width = '50%'}
+knitr::include_graphics("umap_3D_color2.png")
+```
+
+In addition, the coloring of each sample can also be based on the expression levels of a gene 
+rather than the domains by specifying a gene name to the argument `color_by_gene`.
+In such case, the `domcol` is ignored. 
+
+```{r}
+plotUMAP(eobj, color_by_gene = "Actn2", file = "umap_3D_color3.png", size = 1.5)
+```
+
+```{r, echo=FALSE, fig.cap= "UMAP", out.width = '50%'}
+knitr::include_graphics("umap_3D_color3.png")
+```
+
+
+If `movie = TRUE`, a movie of the resulting UMAP is generated.
+This option is valid when `rgl = TRUE`.
+
+
+```{r, eval = FALSE}
+plotUMAP(eobj, movie = TRUE)
 ```
 
 The above script uses all cell samples for UMAP plotting.
@@ -497,9 +654,9 @@ If you want to plot UMAP with downsampled sets, the following script can work.
 eobj.tmp <- eobj
 samples <- eobj.tmp@ssets[["set.1"]]
 eobj.tmp@exprs <- eobj.tmp@exprs[match(samples, rownames(eobj.tmp@exprs)), , drop = FALSE]
-plotUMAP(eobj.tmp, gset = eobj.tmp@mcmc[["best_genes"]][[1]],
-         umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000),
-         movie = TRUE, domcol = domain_colors)
+eobj.tmp <- runUMAP(eobj.tmp, gset = eobj.tmp@mcmc[["best_genes"]][[1]], 
+                    umap_param = list("n_neighbors" = 5, "n_components" = 3, "n_epochs" = 1000))
+plotUMAP(eobj.tmp, movie = TRUE, domcol = domain_colors)
 ```
 
 UMAP is even more effective for overviewing distribution of cell samples when the number of cell samples is large.
@@ -512,13 +669,12 @@ knitr::include_graphics("umap.all.png")
 
 ## Appendix
 The gene description can be obtained via `biomaRt` package as followings:
-```{r}
+```{r, eval=FALSE}
 library(biomaRt)
 fgenes <- c("Actn2", "Hand2", "Vegfb", "Wnt5a")
 ds <- useEnsembl(biomart = 'ensembl', dataset = 'mmusculus_gene_ensembl')
 ann <- getBM(attributes = c("mgi_symbol", "description"), 
              mart = ds, filters = "mgi_symbol", values = fgenes)
-ann
 ```
 
 __Note__
@@ -530,6 +686,4 @@ In that case, add the option `useCache = False` to the `getBM` function.
 ann <- getBM(attributes = c("mgi_symbol", "description"), 
              mart = ds, filters = "mgi_symbol", values = fgenes, useCache = FALSE)
 ```
-
-
 

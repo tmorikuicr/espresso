@@ -2,21 +2,22 @@ Package: espresso
 Type: Package
 Title: Enhanced spatial reconstruction by stochastic self-organizing
         map
-Version: 0.2.7
-Date: 2021-01-04
+Version: 0.2.17
+Date: 2022-01-13
 Authors@R: person("Tomoya", "Mori", role = c("aut", "cre"), email = "tmori@kuicr.kyoto-u.ac.jp")
 Description: This is a package for domain estimation of cells only from gene expression profile based on graph-structured stochastic self-organizing map (GraphSOM) and Markov chain Monte Carlo (MCMC) method.
 License: GPL-3
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
-Imports: biomaRt, GO.db, igraph, mclust, progress, umap, rgl, rFerns,
-        Boruta, doParallel, foreach, pheatmap, RColorBrewer, methods,
-        grDevices, stats, utils
-Depends: R (>= 2.10)
+Imports: biomaRt, GO.db, igraph, mclust, progress, uwot, rgl, rFerns,
+        Boruta, doParallel, foreach, scatterplot3d, pheatmap,
+        RColorBrewer, methods, grDevices, stats, utils, tagcloud,
+        plotrix
+Depends: R (>= 3.5.0)
 LazyData: true
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2021-01-04 09:17:45 UTC; tmori
+Packaged: 2022-01-14 01:52:59 UTC; tmori
 Author: Tomoya Mori [aut, cre]
 Maintainer: Tomoya Mori <tmori@kuicr.kyoto-u.ac.jp>

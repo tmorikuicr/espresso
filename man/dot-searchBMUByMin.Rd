@@ -2,16 +2,16 @@
 % Please edit documentation in R/graphsom.R
 \name{.searchBMUByMin}
 \alias{.searchBMUByMin}
-\title{Search the best matching units (BMU)}
+\title{Search for the best matching units (BMU).}
 \usage{
 .searchBMUByMin(obj)
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object}
 }
 \value{
 BMUs given as a matrix.
 }
 \description{
-This function searches the BMUs for each input sample.
+This function searches for the BMUs for each input sample.
 }

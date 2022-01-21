@@ -1,9 +1,9 @@
 # =============================================================================
-#' @title Scale gene expression data by log function
+#' @title Scale gene expression data by log function.
 #' @description This function scales gene expression data 
 #'              by log function with bases 2, 10, and e.
-#' @param obj \code{espresso} object.
-#' @param base base of a logarithm specified 
+#' @param obj The \code{espresso} object.
+#' @param base Base of a logarithm specified 
 #'             as character ('2', '10', or 'e') (default: '10').
 #' @return \code{espresso} object
 #' @export
@@ -23,14 +23,13 @@ logScale <- function(obj, base = "10") {
 }
 
 # =============================================================================
-#' @title Filter out low variable genes
+#' @title Filter out low variable genes.
 #' @description This function filters out low expressed and low variable genes.
-#' @param obj \code{espresso} object.
-#' @param ncell the minimum number of expressed cells 
-#'              for each gene (default: 2)
-#' @param expressed threshold of expression level 
+#' @param obj The \code{espresso} object.
+#' @param ncell Minimum number of expressed cells for each gene (default: 2)
+#' @param expressed Threshold of expression level 
 #'                  for gene filtering (default: 1.0)
-#' @param sd standard deviation for gene filtering (default: 0.05)
+#' @param sd Standard deviation for gene filtering (default: 0.05)
 #' @return \code{espresso} object
 #' @export
 #' 
@@ -64,9 +63,3 @@ filterGenes <- function(obj, ncell = 2, expressed = 1.0, sd = 0.05) {
                  n_before, " -> ", n_after, " genes)."))
   return(obj)
 }
-
-
-
-
-
-

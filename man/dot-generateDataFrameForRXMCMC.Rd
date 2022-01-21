@@ -2,18 +2,18 @@
 % Please edit documentation in R/rxmcmc.R
 \name{.generateDataFrameForRXMCMC}
 \alias{.generateDataFrameForRXMCMC}
-\title{Generate a data frame for replica exchange MCMC results}
+\title{Generate a data frame for storing replica exchange MCMC results.}
 \usage{
 .generateDataFrameForRXMCMC(n_repl, n)
 }
 \arguments{
-\item{n_repl}{the number of replicas}
+\item{n_repl}{Number of replicas}
 
-\item{n}{the number of rows}
+\item{n}{Number of rows}
 }
 \value{
-a data frame
+Data frame
 }
 \description{
-This function generates a data frame for storing MCMC results
+This function generates a data frame for storing MCMC results.
 }

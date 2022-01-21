@@ -2,14 +2,14 @@
 % Please edit documentation in R/preprocess.R
 \name{logScale}
 \alias{logScale}
-\title{Scale gene expression data by log function}
+\title{Scale gene expression data by log function.}
 \usage{
 logScale(obj, base = "10")
 }
 \arguments{
-\item{obj}{\code{espresso} object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{base}{base of a logarithm specified 
+\item{base}{Base of a logarithm specified 
 as character ('2', '10', or 'e') (default: '10').}
 }
 \value{

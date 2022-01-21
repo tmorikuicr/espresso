@@ -2,20 +2,19 @@
 % Please edit documentation in R/preprocess.R
 \name{filterGenes}
 \alias{filterGenes}
-\title{Filter out low variable genes}
+\title{Filter out low variable genes.}
 \usage{
 filterGenes(obj, ncell = 2, expressed = 1, sd = 0.05)
 }
 \arguments{
-\item{obj}{\code{espresso} object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{ncell}{the minimum number of expressed cells 
-for each gene (default: 2)}
+\item{ncell}{Minimum number of expressed cells for each gene (default: 2)}
 
-\item{expressed}{threshold of expression level 
+\item{expressed}{Threshold of expression level 
 for gene filtering (default: 1.0)}
 
-\item{sd}{standard deviation for gene filtering (default: 0.05)}
+\item{sd}{Standard deviation for gene filtering (default: 0.05)}
 }
 \value{
 \code{espresso} object

@@ -2,15 +2,15 @@
 % Please edit documentation in R/graphsom.R
 \name{.initMapBySamples}
 \alias{.initMapBySamples}
-\title{Initialize map by input samples}
+\title{Initialize map by input samples.}
 \usage{
 .initMapBySamples(obj)
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object.}
 }
 \value{
-espresso object
+\code{espresso} object
 }
 \description{
 This function initializes map 

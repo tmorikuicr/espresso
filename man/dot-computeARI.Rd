@@ -2,14 +2,14 @@
 % Please edit documentation in R/graphsom.R
 \name{.computeARI}
 \alias{.computeARI}
-\title{Compute adjusted rand index (ARI)}
+\title{Compute adjusted rand index (ARI).}
 \usage{
 .computeARI(obj, r)
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{r}{replication number}
+\item{r}{Repetition number.}
 }
 \value{
 adjusted rand index

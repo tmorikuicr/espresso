@@ -2,12 +2,12 @@
 % Please edit documentation in R/graphsom.R
 \name{.evalGraphSOM}
 \alias{.evalGraphSOM}
-\title{Sub-Function of evaluating GraphSOM clustering results}
+\title{Sub-Function of evaluating GraphSOM clustering results.}
 \usage{
 .evalGraphSOM(obj)
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 }
 \value{
 espresso object

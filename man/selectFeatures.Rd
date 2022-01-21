@@ -2,18 +2,24 @@
 % Please edit documentation in R/boruta.R
 \name{selectFeatures}
 \alias{selectFeatures}
-\title{Select important features by Boruta}
+\title{Select important features by Boruta.}
 \usage{
-selectFeatures(obj, maxRuns = 500)
+selectFeatures(obj, maxRuns = 500, decision = "nr", seed = NULL)
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{maxRuns}{the maximum number of importance source runs.}
+\item{maxRuns}{The maximum number of importance source runs.}
+
+\item{decision}{Decision type of Boruta 
+("c": Confirmed, "nr": Not Rejected (i.e., Confirmed & Tentative)
+(default: "nr").}
+
+\item{seed}{Random seed.}
 }
 \value{
-a data.frame of the result of feature selection
+Data Frame of the result of feature selection.
 }
 \description{
-This function get feature importance by Boruta package
+This function gets important features by \code{Boruta} package.
 }

@@ -2,17 +2,17 @@
 % Please edit documentation in R/rxmcmc.R
 \name{.sampleGeneSet}
 \alias{.sampleGeneSet}
-\title{Sample gene set from candidate gene sets}
+\title{Sample a gene set from candidate gene sets.}
 \usage{
 .sampleGeneSet(probs)
 }
 \arguments{
-\item{probs}{vector of probability distribution.}
+\item{probs}{Probability distribution.}
 }
 \value{
-index number of selected sample given as an integer.
+Index number of selected sample given as an integer.
 }
 \description{
-This function samples a gene set from candidate gene sets 
-under the defined prior probability distribution.
+This function samples a gene set from the candidate gene sets 
+             under the defined probability distribution.
 }

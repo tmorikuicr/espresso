@@ -2,17 +2,17 @@
 % Please edit documentation in R/go.R
 \name{.getGO2Offsprings}
 \alias{.getGO2Offsprings}
-\title{Get offsprings of each Gene Ontology}
+\title{Get offsprings of each Gene Ontology.}
 \usage{
 .getGO2Offsprings(terms)
 }
 \arguments{
-\item{terms}{dataframe of GO terms.}
+\item{terms}{Data frame of GO terms.}
 }
 \value{
-list of GOs and their offsprings.
+List of GOs and their offsprings.
 }
 \description{
-This function gets Gene Ontology and 
-             thier offsprings information via \code{GO.db}.
+This function gets GO and 
+             thier offspring information via \code{GO.db}.
 }

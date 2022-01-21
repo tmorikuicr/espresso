@@ -2,21 +2,19 @@
 % Please edit documentation in R/umap.R
 \name{plotUMAP}
 \alias{plotUMAP}
-\title{Plot 3D UMAP}
+\title{Plot UMAP.}
 \usage{
 plotUMAP(
   obj,
-  file = "umap.png",
-  gset = NULL,
+  file = "umap.pdf",
   movie = FALSE,
   dir = ".",
-  umap_param = NULL,
+  mname = "movie",
   seed = 0,
   windowRect = c(0, 200, 1000, 1200),
   lit = TRUE,
-  pch = 21,
+  pch = 16,
   size = 0.5,
-  lpch = 16,
   cex = 2,
   inset = c(0.02),
   view_mat = c(0.8662382, -0.4996285, -0.001548417, 0, 0.2102456, 0.3617015,
@@ -25,50 +23,70 @@ plotUMAP(
   axis = c(0, 0, 1),
   rpm = 5,
   duration = 10,
-  domcol = NULL
+  domcol = NULL,
+  rgl = TRUE,
+  save = TRUE,
+  rglclose = FALSE,
+  color_by_gene = NULL,
+  lcex = 1.2,
+  color_by_group = NULL,
+  grpcol = NULL,
+  magnify = 1
 )
 }
 \arguments{
-\item{obj}{\code{espresso} object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{file}{path to the output directory.}
+\item{file}{Path to the output file (default: "umap.png").}
 
-\item{gset}{vector of genes.}
+\item{movie}{Whether to make movie (default: FALSE).}
 
-\item{movie}{whether to make movie.}
+\item{dir}{Path to the output directory for the movie ("default: ".").}
 
-\item{dir}{path to the output directory for the movie.}
+\item{mname}{Name of movie file (default: "movie").}
 
-\item{seed}{random seed}
-
-\item{windowRect}{vector of four values indicating the 
+\item{windowRect}{Vector of four values indicating the 
 left, top, right and bottom of 
 the displayed window (in pixels).}
 
-\item{lit}{specifying if lighting calculation should take place on geometry}
+\item{lit}{Lpecifying if lighting calculation should take place on geometry (default: TRUE).}
 
-\item{pch}{symbols to plot}
+\item{pch}{Symbols to plot (default: 16).}
 
-\item{size}{size of the plotted points.}
+\item{size}{Size of the plotted points (default: 0.5).}
 
-\item{lpch}{symbols in the legend.}
+\item{cex}{Character expansion factor (default: 2).}
 
-\item{cex}{character expansion factor.}
+\item{inset}{Inset distance(s) from the margins (default: c(0.02)).}
 
-\item{inset}{inset distance(s) from the margins.}
+\item{view_mat}{Transformation matrix.}
 
-\item{view_mat}{the transformation matrix}
+\item{zoom}{Zoom factor (default: 0.9).}
 
-\item{zoom}{zoom factor.}
+\item{axis}{Axis of rotation (default: c(0, 0, 1)).}
 
-\item{axis}{axis of rotation.}
+\item{rpm}{Rotation speed in rotations per minute (default:  5).}
 
-\item{rpm}{rotation speed in rotations per minute.}
+\item{duration}{Duration of the animation (default: 10).}
 
-\item{duration}{the duration of the animation.}
+\item{domcol}{List indicating domains and colors.}
 
-\item{domcol}{list indicating domains and colors.}
+\item{rgl}{Logical value indicating that 'rgl' is used for 3D plotting.}
+
+\item{save}{Logical value indicating that the plot is saved or not. (default: TRUE).}
+
+\item{rglclose}{Logical value indicating that the  RGL window is closed after plotting (default: FALSE).}
+
+\item{color_by_gene}{Gene name given as characters (default: NULL).}
+
+\item{lcex}{Character expansion factor for the legend (default: 1.2)}
+
+\item{color_by_group}{Data.frame indicating samples and their group.}
+
+\item{grpcol}{List indicating group and colors.}
+
+\item{magnify}{Multiplicative factor to apply to size of window when producing legend (default: 1).}
 }
 \description{
-This function plots UMAP
+This function plots UMAP.
 }

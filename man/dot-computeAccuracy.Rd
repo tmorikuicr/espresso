@@ -2,14 +2,16 @@
 % Please edit documentation in R/graphsom.R
 \name{.computeAccuracy}
 \alias{.computeAccuracy}
-\title{Compute prediction accuracy of GraphSOM clustering results}
+\title{Compute prediction accuracy of GraphSOM clustering results.}
 \usage{
-.computeAccuracy(obj, r)
+.computeAccuracy(obj, r, l)
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{r}{replication number.}
+\item{r}{Repetition number.}
+
+\item{l}{Learning step number.}
 }
 \value{
 accuracy

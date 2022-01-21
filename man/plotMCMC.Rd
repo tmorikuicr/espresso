@@ -2,14 +2,13 @@
 % Please edit documentation in R/rxmcmc.R
 \name{plotMCMC}
 \alias{plotMCMC}
-\title{Plot MCMC history}
+\title{Plot MCMC history.}
 \usage{
 plotMCMC(obj)
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object.}
 }
 \description{
-This function plots the sampling history and 
-             replica exchange history.
+This function plots the sampling history and replica exchange history.
 }

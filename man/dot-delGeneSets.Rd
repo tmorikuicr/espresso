@@ -2,17 +2,17 @@
 % Please edit documentation in R/rxmcmc.R
 \name{.delGeneSets}
 \alias{.delGeneSets}
-\title{Delete gene sets already sampled}
+\title{Delete gene sets which are already sampled.}
 \usage{
 .delGeneSets(glist1, glist2)
 }
 \arguments{
-\item{glist1}{list of candidate gene sets}
+\item{glist1}{List of candidate gene sets.}
 
-\item{glist2}{list of gene sets already sampled}
+\item{glist2}{List of gene sets already sampled.}
 }
 \value{
-a list
+List
 }
 \description{
 This function deletes gene sets which are already sampled.

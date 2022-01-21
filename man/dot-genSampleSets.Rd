@@ -2,19 +2,19 @@
 % Please edit documentation in R/graphsom.R
 \name{.genSampleSets}
 \alias{.genSampleSets}
-\title{Select samples randomly for down sampling}
+\title{Select samples randomly for down sampling.}
 \usage{
 .genSampleSets(obj, nsamples, rept)
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{nsamples}{the number of samples to be selected from each domain.}
+\item{nsamples}{Number of samples to be selected from each domain.}
 
-\item{rept}{the number of replications.}
+\item{rept}{Number of replications.}
 }
 \value{
-espresso object
+\code{espresso} object
 }
 \description{
 This function randomly select samples 

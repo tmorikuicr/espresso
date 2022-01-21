@@ -2,15 +2,15 @@
 % Please edit documentation in R/graphsom.R
 \name{.trainGraphSOM}
 \alias{.trainGraphSOM}
-\title{Sub-function of learning input data}
+\title{Sub-function of learning input data.}
 \usage{
 .trainGraphSOM(obj)
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object}
 }
 \value{
-espresso object
+\code{espresso} object
 }
 \description{
 This sub-function trains GraphSOM with input learning data.

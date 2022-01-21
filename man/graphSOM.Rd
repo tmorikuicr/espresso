@@ -2,22 +2,22 @@
 % Please edit documentation in R/graphsom.R
 \name{graphSOM}
 \alias{graphSOM}
-\title{Run GraphSOM clustering}
+\title{Run GraphSOM clustering.}
 \usage{
-graphSOM(obj, gset = NULL, seed = 0, verbose = TRUE)
+graphSOM(obj, gset = NULL, seed = NULL, verbose = TRUE)
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{gset}{vector of genes}
+\item{gset}{Gene set.}
 
-\item{seed}{random seed}
+\item{seed}{Random seed.}
 
-\item{verbose}{whether to show messages}
+\item{verbose}{Whether to show messages.}
 }
 \value{
-espresso object
+\code{espresso} object
 }
 \description{
-This function execute GraohSOM clustering
+This function executes GraohSOM clustering.
 }

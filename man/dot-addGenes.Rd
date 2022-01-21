@@ -2,20 +2,20 @@
 % Please edit documentation in R/rxmcmc.R
 \name{.addGenes}
 \alias{.addGenes}
-\title{Add k genes to a gene set}
+\title{Add genes to the input gene set.}
 \usage{
 .addGenes(gset, bgset, k)
 }
 \arguments{
-\item{gset}{gene set to be optimized.}
+\item{gset}{Gene set to be optimized.}
 
-\item{bgset}{background gene set.}
+\item{bgset}{Background gene set.}
 
-\item{k}{the maximum number of genes operated in each MCMC step.}
+\item{k}{Maximum number of genes operated in each MCMC step.}
 }
 \value{
 list of gene sets
 }
 \description{
-This function adds k genes to a gene set to be optimized by MCMC.
+This function adds genes to the gene set to be optimized by MCMC.
 }

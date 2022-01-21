@@ -2,21 +2,21 @@
 % Please edit documentation in R/rxmcmc.R
 \name{.calc_accept_prob}
 \alias{.calc_accept_prob}
-\title{Calcurate the acceptance probability}
+\title{Calcurate the acceptance probability.}
 \usage{
 .calc_accept_prob(acc0, acc, t)
 }
 \arguments{
-\item{acc0}{accuracy of the previouse sample.}
+\item{acc0}{Accuracy of the previouse sample.}
 
-\item{acc}{accuracy of the candidate sample.}
+\item{acc}{Accuracy of the candidate sample.}
 
-\item{t}{temperature parameter.}
+\item{t}{Temperature.}
 }
 \value{
-probability given as numeric value
+Probability given as numeric value
 }
 \description{
 This function calculates the acceptance probability for MCMC sampling.
-The condition equation is based on the traditional Simulated Annealing approach.
+             The condition equation is based on the traditional Simulated Annealing approach.
 }

@@ -2,15 +2,15 @@
 % Please edit documentation in R/graphsom.R
 \name{.initMapByRandom}
 \alias{.initMapByRandom}
-\title{Initialize map by uniformly distributed random variables}
+\title{Initialize map by uniformly distributed random variables.}
 \usage{
 .initMapByRandom(obj)
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object}
 }
 \value{
-espresso object
+\code{espresso} object
 }
 \description{
 This function initializes map 

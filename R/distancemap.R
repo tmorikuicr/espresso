@@ -1,16 +1,18 @@
 # =============================================================================
-#' @title Plot distance maps
-#' @description This function plots distance matrices between domain-domain and 
+#' @title Plot distance map as heatmap.
+#' @description This function plots distance maps between domain-domain and 
 #'              before/after GraphSOM clustering.
-#' @param obj espresso object
-#' @param type type of map ("d": domain, "s": sample, "b": both)
+#' @param obj The \code{espresso} object.
+#' @param type Type of the plotted maps ("d": domain, "s": sample, "b": both).
+#' @param size_d Font and cell sizes for row and column for distance map of domains (default: NULL).
+#' @param size_s Font and cell sizes for row and column for distance map of cell samples (default: 5).
 #' @importFrom igraph shortest.paths
 #' @importFrom pheatmap pheatmap
 #' @importFrom grDevices colorRampPalette
 #' @import RColorBrewer
 #' @export
 #' 
-plotDistMap <- function(obj, type = "b") {
+plotDistMap <- function(obj, type = "b", size_d = NULL, size_s = 5) {
   if (type != "d" && type != "s" && type != "b") {
     warning("'type' option is invalid.")
   } else {
@@ -19,9 +21,18 @@ plotDistMap <- function(obj, type = "b") {
     if (type == "d" || type == "b") {
       
       # Plot distance maps of domains before GraphSOM ------------------------
-      pheatmap(distmat, cluster_cols = F, cluster_rows = F, 
-               color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
-               main = "Distance of domains")
+      if (!is.null(size_d)) {
+        pheatmap(distmat, cluster_cols = F, cluster_rows = F, 
+                 color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
+                 main = "Distance of domains", 
+                 fontsize_row = size_d, fontsize_col = size_d,
+                 cellheight = size_d, cellwidth = size_d
+                 )
+      } else {
+        pheatmap(distmat, cluster_cols = F, cluster_rows = F, 
+                 color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
+                 main = "Distance of domains")
+      }
     } 
     if (type == "s" || type == "b") {
 
@@ -46,8 +57,8 @@ plotDistMap <- function(obj, type = "b") {
         }
         pheatmap(sample_dist, 
                  cluster_cols = F, cluster_rows = F, 
-                 fontsize_row = 5, fontsize_col = 5, 
-                 cellheight = 5, cellwidth = 5, 
+                 fontsize_row = size_s, fontsize_col = size_s, 
+                 cellheight = size_s, cellwidth = size_s, 
                  color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
                  main = main_title
         )
@@ -88,8 +99,8 @@ plotDistMap <- function(obj, type = "b") {
             if (length(unique(vec[!is.na(vec)])) != 1) {
               pheatmap(sample_dist2,
                        cluster_cols = F, cluster_rows = F, 
-                       fontsize_row = 5, fontsize_col = 5, 
-                       cellheight = 5, cellwidth = 5, 
+                       fontsize_row = size_s, fontsize_col = size_s, 
+                       cellheight = size_s, cellwidth = size_s,  
                        color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
                        main = main_title
               )
@@ -98,25 +109,25 @@ plotDistMap <- function(obj, type = "b") {
               ds[upper.tri(ds)] <- sample_dist2[upper.tri(sample_dist2)]
               if ( length(grep("repl", names(obj@bmu))) > 0 ) {
                 if (length(obj@ssets) == 1 && length(obj@bmu) == 1) {
-                  main_title <- "Distance of sample cells \nin original (lower) and after (upper) GraphSOM"
+                  main_title <- "Distance of sample cells \nin original (lower) and after GraphSOM (upper)"
                 } else if (length(obj@ssets) == 1 && length(obj@bmu) > 1) {
-                  main_title <- paste("Distance of sample cells \nin original (lower) and after (upper) GraphSOM\n(", repl, ")", sep = "")
+                  main_title <- paste("Distance of sample cells \nin original (lower) and after GraphSOM (upper)\n(", repl, ")", sep = "")
                 } else if (length(obj@ssets) > 1 && length(obj@bmu) == 1) {
-                  main_title <- paste("Distance of sample cells \nin original (lower) and after (upper) GraphSOM\n(rept.", i, ")", sep = "")
+                  main_title <- paste("Distance of sample cells \nin original (lower) and after GraphSOM (upper)\n(rept.", i, ")", sep = "")
                 } else {
-                  main_title <- paste("Distance of sample cells \nin original (lower) and after (upper) GraphSOM\n(", repl, ", rept.", i, ")", sep = "")
+                  main_title <- paste("Distance of sample cells \nin original (lower) and after GraphSOM (upper)\n(", repl, ", rept.", i, ")", sep = "")
                 }
               } else {
                 if (length(obj@ssets) == 1) {
-                  main_title <- "Distance of sample cells \nin original (lower) and after (upper) GraphSOM"
+                  main_title <- "Distance of sample cells \nin original (lower) and after GraphSOM (upper)"
                 } else {
-                  main_title <- paste("Distance of sample cells \nin original (lower) and after (upper) GraphSOM\n(rept.", i, ")", sep = "")
+                  main_title <- paste("Distance of sample cells \nin original (lower) and after GraphSOM (upper)\n(rept.", i, ")", sep = "")
                 }
               }
               pheatmap(ds, 
                        cluster_cols = F, cluster_rows = F, 
-                       fontsize_row = 5, fontsize_col = 5, 
-                       cellheight = 5, cellwidth = 5, 
+                       fontsize_row = size_s, fontsize_col = size_s, 
+                       cellheight = size_s, cellwidth = size_s, 
                        color = colorRampPalette(brewer.pal(n = 7, name = "Blues"))(100), na_col = "black",
                        main = main_title
               )

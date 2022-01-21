@@ -2,19 +2,18 @@
 % Please edit documentation in R/go.R
 \name{.getGO2Genes}
 \alias{.getGO2Genes}
-\title{Get gene information}
+\title{Get gene information.}
 \usage{
 .getGO2Genes(obj, ds)
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{ds}{dataset to be accessed via biomaRt.}
+\item{ds}{Dataset to be accessed via biomaRt.}
 }
 \value{
-list of GO and genes
+List of GO and genes
 }
 \description{
-This function gets gene information for each GO 
-             via BioMart database.
+This function gets gene information for each GO via BioMart database.
 }

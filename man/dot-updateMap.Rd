@@ -2,16 +2,16 @@
 % Please edit documentation in R/graphsom.R
 \name{.updateMap}
 \alias{.updateMap}
-\title{Update map}
+\title{Update map.}
 \usage{
 .updateMap(obj, h, bmu)
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object}
 
-\item{h}{neighborhood range}
+\item{h}{Neighborhood range.}
 
-\item{bmu}{the best matching units}
+\item{bmu}{Best matching units.}
 }
 \value{
 updated map

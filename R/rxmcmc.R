@@ -1,11 +1,12 @@
 # =============================================================================
-#' @title Add k genes to a gene set
-#' @description This function adds k genes to a gene set to be optimized by MCMC.
-#' @param gset gene set to be optimized.
-#' @param bgset background gene set.
-#' @param k the maximum number of genes operated in each MCMC step.
+#' @title Add genes to the input gene set.
+#' @description This function adds genes to the gene set to be optimized by MCMC.
+#' @param gset Gene set to be optimized.
+#' @param bgset Background gene set.
+#' @param k Maximum number of genes operated in each MCMC step.
 #' @importFrom utils combn
 #' @return list of gene sets
+#' 
 .addGenes <- function(gset, bgset, k){
   cand_gsets <- list()
   bgset <- setdiff(bgset, gset)
@@ -23,11 +24,11 @@
 }
 
 # =============================================================================
-#' @title Delete k genes to a gene set
-#' @description This function delete k genes to a gene set to be optimized by MCMC.
-#' @param gset gene set to be optimized.
-#' @param bgset background gene set.
-#' @param k the maximum number of genes operated in each MCMC step.
+#' @title Delete genes from the input gene set.
+#' @description This function delete genes from the gene set to be optimized by MCMC.
+#' @param gset Gene set to be optimized.
+#' @param bgset Background gene set.
+#' @param k Maximum number of genes operated in each MCMC step.
 #' @importFrom utils combn
 #' @return list of gene sets
 #'
@@ -46,22 +47,22 @@
 }
 
 # =============================================================================
-#' @title Replace k genes
-#' @description This function replace k genes
-#' @param gset gene set to be optimized.
-#' @param bgset background gene set.
-#' @param k the maximum number of genes operated in each MCMC step.
+#' @title Replace genes of the input gene set.
+#' @description This function replace genes of the input gene set.
+#' @param gset Gene set to be optimized.
+#' @param bgset Background gene set.
+#' @param k Maximum number of genes operated in each MCMC step.
 #' @importFrom utils combn
 #' @return list of gene sets
 #'
 .replaceGenes <- function(gset, bgset, k){
   cand_gsets <- list()
   bgset <- setdiff(bgset,gset)
-  for(i in 1:k){
+  for (i in 1:k) {
     del_idx <- sample(1:length(gset), i)
     del_gset <- gset[-del_idx]
     combs <- combn(bgset, i)
-    for(j in 1:ncol(combs)){
+    for (j in 1:ncol(combs)) {
       cand_gsets <- c(cand_gsets, list(c(del_gset, unlist(combs[,j]))))
     }
   }
@@ -69,10 +70,10 @@
 }
 
 # =============================================================================
-#' @title Define a prior distribution for MCMC sampling
-#' @description This function defines a prior distribution for MCMC sampling.
-#' @param tbl summary table of a GraphSOM clustering result.
-#' @param fact scaling factor for computing selection probability
+#' @title Define a probability distribution for MCMC sampling.
+#' @description This function defines a probability distribution for MCMC sampling.
+#' @param tbl Summary table of a GraphSOM clustering result.
+#' @param fact Scaling factor for computing selection probability
 #' @return selection probabilities given as a matrix.
 #'
 .definePriorDistr <- function(tbl, fact){
@@ -96,11 +97,11 @@
 }
 
 # =============================================================================
-#' @title Sample gene set from candidate gene sets
-#' @description This function samples a gene set from candidate gene sets 
-#' under the defined prior probability distribution.
-#' @param probs vector of probability distribution.
-#' @return index number of selected sample given as an integer.
+#' @title Sample a gene set from candidate gene sets.
+#' @description This function samples a gene set from the candidate gene sets 
+#'              under the defined probability distribution.
+#' @param probs Probability distribution.
+#' @return Index number of selected sample given as an integer.
 #'
 .sampleGeneSet <- function(probs){
   r <- runif(1)
@@ -109,13 +110,13 @@
 }
 
 # =============================================================================
-#' @title Calcurate the acceptance probability
+#' @title Calcurate the acceptance probability.
 #' @description This function calculates the acceptance probability for MCMC sampling.
-#' The condition equation is based on the traditional Simulated Annealing approach.
-#' @param acc0 accuracy of the previouse sample.
-#' @param acc accuracy of the candidate sample.
-#' @param t temperature parameter.
-#' @return probability given as numeric value
+#'              The condition equation is based on the traditional Simulated Annealing approach.
+#' @param acc0 Accuracy of the previouse sample.
+#' @param acc Accuracy of the candidate sample.
+#' @param t Temperature.
+#' @return Probability given as numeric value
 .calc_accept_prob <- function(acc0, acc, t){
   if (is.na(acc)) {
     p <- 0
@@ -133,11 +134,11 @@
 }
 
 # =============================================================================
-#' @title Make index vector for exchange of replicas
-#' @description This function makes a index vector for exchange of replicas
-#' @param n_repl the number of replicas
-#' @param e exchange time
-#' @return vector
+#' @title Make index vector for exchange of replicas.
+#' @description This function makes a index vector for exchange of replicas.
+#' @param n_repl Number of replicas
+#' @param e Exchange time
+#'
 .idx4ex <- function(n_repl, e) {
   if (e %% 2 == 0) {
     1:floor(n_repl / 2) * 2 - 1
@@ -147,11 +148,11 @@
 }
 
 # =============================================================================
-#' @title Generate a data frame for replica exchange MCMC results
-#' @description This function generates a data frame for storing MCMC results
-#' @param n_repl the number of replicas
-#' @param n the number of rows
-#' @return a data frame
+#' @title Generate a data frame for storing replica exchange MCMC results.
+#' @description This function generates a data frame for storing MCMC results.
+#' @param n_repl Number of replicas
+#' @param n Number of rows
+#' @return Data frame
 #' 
 .generateDataFrameForRXMCMC <- function(n_repl, n) {
   df <- vector("list", length = n_repl)
@@ -164,21 +165,18 @@
                           max_ari = numeric(n), min_ari = numeric(n),
                           gene_size = integer(n), stringsAsFactors = FALSE)
     rownames(df[[i]]) <- paste0("step.", 0:(n - 1))
-    #df[[i]][1, ] <- c(-1.0, 0, 0, 0, -1.0, 0, 0)
-    df[[i]][1, ] <- c(-1.0, 0, -Inf, Inf,
-                      0, 0, -Inf, Inf,
-                      -1.0, 0, -Inf, Inf,
-                      0)
+    df[[i]][1, ] <- c(-1.0, 0, -Inf, Inf, 0, 0, -Inf, Inf,
+                      -1.0, 0, -Inf, Inf, 0)
   }
   return(df)
 }
 
 # =============================================================================
-#' @title Delete gene sets already sampled
+#' @title Delete gene sets which are already sampled.
 #' @description This function deletes gene sets which are already sampled.
-#' @param glist1 list of candidate gene sets
-#' @param glist2 list of gene sets already sampled
-#' @return a list
+#' @param glist1 List of candidate gene sets.
+#' @param glist2 List of gene sets already sampled.
+#' @return List
 #' 
 .delGeneSets <- function(glist1, glist2) {
   del_list <- c()
@@ -195,35 +193,48 @@
 }
 
 # =============================================================================
-#' @title Optimize genes by replica exchange MCMC
+#' @title Optimize genes by replica exchange MCMC.
 #' @description This function performs optimization of genes included in a selected gene set.
 #'              The optimization is done by replica exchange Markov Chain Monte Carlo (MCMC) approach.
-#' @param obj espresso object
-#' @param gset geneset 
-#' @param temp maximum temperature
-#' @param itr the number of iterations until exchange of replicas
-#' @param k the maximum number of genes operated in each MCMC step
-#' @param seed the seed
-#' @param n_cl the number of clusters for parallel computing
-#' @param n_ex the number of exchanges
-#' @param n_repl the number of replicas
-#' @param n_ig the number of initial genes randomly selected for MCMC.
-#' @param fact scaling factor for computing selection probability
+#' @param obj The \code{espresso} object.
+#' @param gset Gene set. 
+#' @param temp Maximum temperature (default: 1.0).
+#' @param itr Number of iterations until exchange of replicas (default: 10).
+#' @param k Maximum number of genes operated in each MCMC step (default: 1).
+#' @param seed Random seed.
+#' @param n_cl Number of clusters for parallel computing (default: \code{detectCores()}).
+#' @param n_ex Number of exchanges (default: 10)
+#' @param n_repl Number of replicas (default: \code{detectCores()}).
+#' @param n_ig Number of initial genes randomly selected for MCMC.
+#' @param fact Scaling factor for computing selection probability.
 #' @import doParallel
 #' @import parallel
 #' @import foreach
 #' @import progress
-#' @return espresso object
+#' @return \code{espresso} object
 #' @export 
 #'
-rxmcmc <- function(obj, gset = NULL, temp = 1.0, itr = 10, k = 1, seed = 0, 
+rxmcmc <- function(obj, gset = NULL, temp = 1.0, itr = 10, k = 1, seed = NULL, 
                    n_cl = detectCores(), n_ex = 10, n_repl = detectCores(), n_ig = 3, fact = NULL) {
   if (!is.null(seed)) {
     set.seed(seed)
+  } else {
+    seed <- 0
   }
   if (is.null(gset)) {
     warning("Input `gset` to be optimized.")
     return(obj)
+  }
+  gset0 <- gset
+  exist <- match(gset, colnames(obj@exprs))
+  gset <- colnames(obj@exprs)[exist[!is.na(exist)]]
+  diff <- setdiff(gset0, gset)
+  if (length(diff) == 1) {
+    warning(paste("A gene (", paste(diff, collapse = ", "), ") is removed 
+                  from `gset` since it does not exist in @exprs.", sep=""))
+  } else if (length(diff) > 1) {
+    warning(paste("Genes (", paste(diff, collapse = ", "), ") are removed 
+                  from `gset` since they do not exist in @exprs.", sep=""))
   }
   t <- 2^seq(log2(temp), log2(0.001), len = n_repl)
   repl <- 1:n_repl
@@ -327,6 +338,9 @@ rxmcmc <- function(obj, gset = NULL, temp = 1.0, itr = 10, k = 1, seed = 0,
       if (i %% itr == 0) {
         ex <- ex + 1
         for (r in .idx4ex(n_repl, ex)) {
+          if (r == 0 || is.na(t[r + 1])) {
+            next
+          }
           inv_t1 <- 1 / t[r]
           inv_t2 <- 1 / t[r + 1]
           e1 <- res_rx[[repl[r]]]$summary$mean_score
@@ -382,13 +396,13 @@ rxmcmc <- function(obj, gset = NULL, temp = 1.0, itr = 10, k = 1, seed = 0,
 }
 
 # =============================================================================
-#' @title Plot MCMC history
-#' @description This function plots the sampling history and 
-#'              replica exchange history.
-#' @param obj espresso object
+#' @title Plot MCMC history.
+#' @description This function plots the sampling history and replica exchange history.
+#' @param obj The \code{espresso} object.
 #' @import RColorBrewer
 #' @importFrom graphics legend lines par
 #' @export
+#' 
 plotMCMC <- function(obj) {
   n_steps <- nrow(obj@mcmc[['max']][[1]])
   n_repl <- length(obj@mcmc[['max']])
@@ -463,4 +477,43 @@ plotMCMC <- function(obj) {
   }
   par(xpd=T)
   legend(par()$usr[2], par()$usr[4], legend = replicas, col = colors, lty = 1, lwd = 1.5, bty = 'n')
+}
+
+# =============================================================================
+#' @title Write MCMC results.
+#' @description This function outputs the results of replica exchange MCMC.
+#' @param obj The \code{espresso} object.
+#' @param dir Path to the output directory.
+#' @export
+#' 
+writeMCMC <- function(obj, dir = NULL) {
+  if (is.null(obj@mcmc)) {
+    warning("This function becomes valid after running rxmcmc.")
+  } else {
+    if (is.null(dir)) {
+      dt <- strsplit(as.character(Sys.time()), " ")[[1]]
+      d <- dt[1]
+      t <- gsub(":", "", dt[2])
+      dir <- paste0("writeMCMC_", d, "-", t)
+    }
+    dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+    write.table(obj@mcmc[["best_repl"]],
+                file = paste(dir, "best_repl.txt", sep = "/"), row.names = FALSE, quote = FALSE)
+    gene_sizes <- c()
+    for (i in 1:length(obj@mcmc[["final_genes"]])) {
+      gene_sizes <- c(gene_sizes, length(obj@mcmc[["final_genes"]][[i]]))
+      write.table(data.frame(sort(obj@mcmc[["final_genes"]][[i]])),
+                  file = paste(dir, paste0("final_genes_repl.", i, ".txt"), sep = "/"), 
+                  col.names = FALSE, row.names = FALSE, quote = FALSE)
+    }
+    summary <- as.data.frame(matrix(unlist(obj@summary), ncol = 12, byrow = TRUE))
+    colnames(summary) <- c("mean_score", "var_score","max_score", "min_score", 
+                           "mean_acc", "var_acc", "max_acc", "min_acc",
+                           "mean_ari", "var_ari", "max_ari", "min_ari")
+    rownames(summary) <- paste0("repl.", 1:nrow(summary))
+    summary <- transform(summary, gene_size = gene_sizes)
+    summary <- transform(summary, repl = rownames(summary))
+    summary <- summary[, c(14, 1:13)]
+    write.table(summary, file = paste(dir, "summary.txt", sep = "/"), row.names= F, quote = F, sep = "\t")
+  }
 }

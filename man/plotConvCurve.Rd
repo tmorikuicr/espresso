@@ -2,20 +2,20 @@
 % Please edit documentation in R/graphsom.R
 \name{plotConvCurve}
 \alias{plotConvCurve}
-\title{Plot convergence curve of GraphSOM clustering}
+\title{Plot convergence curve of GraphSOM clustering.}
 \usage{
 plotConvCurve(obj, rept = NULL, col = "deepskyblue4", type = "l", lwd = 1.5)
 }
 \arguments{
-\item{obj}{espresso obj.}
+\item{obj}{The \code{espresso} object.}
 
-\item{rept}{replication number.}
+\item{rept}{Repetition number.}
 
-\item{col}{line color.}
+\item{col}{Line color.}
 
-\item{type}{line type.}
+\item{type}{Line type.}
 
-\item{lwd}{line width.}
+\item{lwd}{Line width.}
 }
 \description{
 This function outputs the convergence curve of 

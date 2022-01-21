@@ -2,18 +2,15 @@
 % Please edit documentation in R/rxmcmc.R
 \name{.idx4ex}
 \alias{.idx4ex}
-\title{Make index vector for exchange of replicas}
+\title{Make index vector for exchange of replicas.}
 \usage{
 .idx4ex(n_repl, e)
 }
 \arguments{
-\item{n_repl}{the number of replicas}
+\item{n_repl}{Number of replicas}
 
-\item{e}{exchange time}
-}
-\value{
-vector
+\item{e}{Exchange time}
 }
 \description{
-This function makes a index vector for exchange of replicas
+This function makes a index vector for exchange of replicas.
 }

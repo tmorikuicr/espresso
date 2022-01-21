@@ -1,11 +1,11 @@
 # =============================================================================
-#' @title Initialize an \code{espresso} object
+#' @title Initialize an \code{espresso} object.
 #' @description Initialize an \code{espresso} object 
 #'              by \code{data}, \code{topology}, and \code{asgmt}.
-#' @param exprs expression matrix (row: samples, col: features).
-#' @param topology adjacent matrix representing a domain toplology.
-#' @param asgmt domain assignment.
-#' @return \code{espresso} object.
+#' @param exprs Expression matrix (row: samples, col: features).
+#' @param topology Adjacent matrix representing a domain toplology.
+#' @param asgmt Domain assignment.
+#' @return The \code{espresso} object.
 #' @importFrom methods new
 #' @export
 #' 

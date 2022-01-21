@@ -2,18 +2,18 @@
 % Please edit documentation in R/rxmcmc.R
 \name{.definePriorDistr}
 \alias{.definePriorDistr}
-\title{Define a prior distribution for MCMC sampling}
+\title{Define a probability distribution for MCMC sampling.}
 \usage{
 .definePriorDistr(tbl, fact)
 }
 \arguments{
-\item{tbl}{summary table of a GraphSOM clustering result.}
+\item{tbl}{Summary table of a GraphSOM clustering result.}
 
-\item{fact}{scaling factor for computing selection probability}
+\item{fact}{Scaling factor for computing selection probability}
 }
 \value{
 selection probabilities given as a matrix.
 }
 \description{
-This function defines a prior distribution for MCMC sampling.
+This function defines a probability distribution for MCMC sampling.
 }

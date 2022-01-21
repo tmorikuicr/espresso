@@ -2,7 +2,7 @@
 % Please edit documentation in R/rxmcmc.R
 \name{rxmcmc}
 \alias{rxmcmc}
-\title{Optimize genes by replica exchange MCMC}
+\title{Optimize genes by replica exchange MCMC.}
 \usage{
 rxmcmc(
   obj,
@@ -10,7 +10,7 @@ rxmcmc(
   temp = 1,
   itr = 10,
   k = 1,
-  seed = 0,
+  seed = NULL,
   n_cl = detectCores(),
   n_ex = 10,
   n_repl = detectCores(),
@@ -19,30 +19,30 @@ rxmcmc(
 )
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object.}
 
-\item{gset}{geneset}
+\item{gset}{Gene set.}
 
-\item{temp}{maximum temperature}
+\item{temp}{Maximum temperature (default: 1.0).}
 
-\item{itr}{the number of iterations until exchange of replicas}
+\item{itr}{Number of iterations until exchange of replicas (default: 10).}
 
-\item{k}{the maximum number of genes operated in each MCMC step}
+\item{k}{Maximum number of genes operated in each MCMC step (default: 1).}
 
-\item{seed}{the seed}
+\item{seed}{Random seed.}
 
-\item{n_cl}{the number of clusters for parallel computing}
+\item{n_cl}{Number of clusters for parallel computing (default: \code{detectCores()}).}
 
-\item{n_ex}{the number of exchanges}
+\item{n_ex}{Number of exchanges (default: 10)}
 
-\item{n_repl}{the number of replicas}
+\item{n_repl}{Number of replicas (default: \code{detectCores()}).}
 
-\item{n_ig}{the number of initial genes randomly selected for MCMC.}
+\item{n_ig}{Number of initial genes randomly selected for MCMC.}
 
-\item{fact}{scaling factor for computing selection probability}
+\item{fact}{Scaling factor for computing selection probability.}
 }
 \value{
-espresso object
+\code{espresso} object
 }
 \description{
 This function performs optimization of genes included in a selected gene set.

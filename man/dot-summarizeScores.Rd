@@ -2,17 +2,17 @@
 % Please edit documentation in R/graphsom.R
 \name{.summarizeScores}
 \alias{.summarizeScores}
-\title{Summarize GraphSOM clustering results}
+\title{Summarize GraphSOM clustering results.}
 \usage{
 .summarizeScores(obj)
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 }
 \value{
-espresso object
+\code{espresso} object
 }
 \description{
-This function computs the mean values of 
-             predicion accuracies and ARIs.
+This function computs the mean, variance, maximum, and minimum 
+             of scores, predicion accuracies and ARIs.
 }

@@ -2,16 +2,20 @@
 % Please edit documentation in R/distancemap.R
 \name{plotDistMap}
 \alias{plotDistMap}
-\title{Plot distance maps}
+\title{Plot distance map as heatmap.}
 \usage{
-plotDistMap(obj, type = "b")
+plotDistMap(obj, type = "b", size_d = NULL, size_s = 5)
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object.}
 
-\item{type}{type of map ("d": domain, "s": sample, "b": both)}
+\item{type}{Type of the plotted maps ("d": domain, "s": sample, "b": both).}
+
+\item{size_d}{Font and cell sizes for row and column for distance map of domains (default: NULL).}
+
+\item{size_s}{Font and cell sizes for row and column for distance map of cell samples (default: 5).}
 }
 \description{
-This function plots distance matrices between domain-domain and 
+This function plots distance maps between domain-domain and 
              before/after GraphSOM clustering.
 }

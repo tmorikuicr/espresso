@@ -2,20 +2,20 @@
 % Please edit documentation in R/rxmcmc.R
 \name{.delGenes}
 \alias{.delGenes}
-\title{Delete k genes to a gene set}
+\title{Delete genes from the input gene set.}
 \usage{
 .delGenes(gset, bgset, k)
 }
 \arguments{
-\item{gset}{gene set to be optimized.}
+\item{gset}{Gene set to be optimized.}
 
-\item{bgset}{background gene set.}
+\item{bgset}{Background gene set.}
 
-\item{k}{the maximum number of genes operated in each MCMC step.}
+\item{k}{Maximum number of genes operated in each MCMC step.}
 }
 \value{
 list of gene sets
 }
 \description{
-This function delete k genes to a gene set to be optimized by MCMC.
+This function delete genes from the gene set to be optimized by MCMC.
 }

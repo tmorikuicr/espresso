@@ -5,14 +5,18 @@
 <img src="img/fig1.png">
 
 ## Installation
+Download a code `espresso-X.X.X.tar.gz` or `espresso-X.X.X.zip` from this repository, and
+install by the following command.
+```
+install.packages("espresso-X.X.X.tar.gz", repos = NULL, type = "source")
+```
 
-To install `espresso` directly from GitHub, start R and enter the following commands.
-Please refer to the following vignette when installing from source.
+As an alternative way, `espresso` can be installed directly from GitHub.
 ```
 library(devtools)
 install_github("tmorikuicr/espresso")
 ```
 
 ## Usage
-Refer to the following vignette for the usage of eSPRESSO package.  
+Refer to the following documentation for the usage of eSPRESSO package.  
 [Vignette](https://tmorikuicr.github.io/espresso/)

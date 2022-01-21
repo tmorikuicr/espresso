@@ -2,15 +2,15 @@
 % Please edit documentation in R/graphsom.R
 \name{.initBMU}
 \alias{.initBMU}
-\title{Initialize Best Matching Units (BMUs)}
+\title{Initialize the best matching units (BMUs).}
 \usage{
 .initBMU(obj)
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object.}
 }
 \value{
-espresso object
+\code{espresso} object
 }
 \description{
 This function initializes BMUs.

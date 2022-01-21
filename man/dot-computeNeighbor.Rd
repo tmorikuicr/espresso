@@ -2,14 +2,14 @@
 % Please edit documentation in R/graphsom.R
 \name{.computeNeighbor}
 \alias{.computeNeighbor}
-\title{Compute neighborhood}
+\title{Compute neighborhood.}
 \usage{
 .computeNeighbor(obj, itr)
 }
 \arguments{
-\item{obj}{espresso object.}
+\item{obj}{The \code{espresso} object.}
 
-\item{itr}{iteration number.}
+\item{itr}{Iteration number.}
 }
 \value{
 neighborhood range

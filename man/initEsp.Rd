@@ -2,19 +2,19 @@
 % Please edit documentation in R/init.R
 \name{initEsp}
 \alias{initEsp}
-\title{Initialize an \code{espresso} object}
+\title{Initialize an \code{espresso} object.}
 \usage{
 initEsp(exprs, topology, asgmt = NULL)
 }
 \arguments{
-\item{exprs}{expression matrix (row: samples, col: features).}
+\item{exprs}{Expression matrix (row: samples, col: features).}
 
-\item{topology}{adjacent matrix representing a domain toplology.}
+\item{topology}{Adjacent matrix representing a domain toplology.}
 
-\item{asgmt}{domain assignment.}
+\item{asgmt}{Domain assignment.}
 }
 \value{
-\code{espresso} object.
+The \code{espresso} object.
 }
 \description{
 Initialize an \code{espresso} object 

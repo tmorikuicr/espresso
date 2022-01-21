@@ -2,20 +2,20 @@
 % Please edit documentation in R/graphsom.R
 \name{.searchBMUByFill}
 \alias{.searchBMUByFill}
-\title{Search the best matching units (BMU) by 'fill' method}
+\title{Search for the best matching units (BMU) by 'fill' method.}
 \usage{
 .searchBMUByFill(obj, itr)
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object.}
 
-\item{itr}{iteration number}
+\item{itr}{Iteration number.}
 }
 \value{
 BMUs given as a matrix.
 }
 \description{
-This function searches the BMUs for each input sample.
+This function searches the for BMUs for each input sample.
              In this function, deifferent from \code{.searchBMUByMin}, 
              if the adjacent units of the most similar unit are empty,
              one of them is selected as BMU.

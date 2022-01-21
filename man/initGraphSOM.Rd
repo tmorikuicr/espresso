@@ -2,7 +2,7 @@
 % Please edit documentation in R/graphsom.R
 \name{initGraphSOM}
 \alias{initGraphSOM}
-\title{Initialize setting for GraohSOM clustering}
+\title{Initialize settings for GraohSOM clustering.}
 \usage{
 initGraphSOM(
   obj,
@@ -17,36 +17,36 @@ initGraphSOM(
   nmax = NULL,
   map_method = "sample",
   bmu_method = "min",
-  seed = 0,
-  coef = 1
+  coef = 1,
+  swap = TRUE,
+  seed = NULL
 )
 }
 \arguments{
-\item{obj}{espresso object}
+\item{obj}{The \code{espresso} object.}
 
-\item{nsamples}{the number of samples of each domain.}
+\item{nsamples}{Number of samples of each domain.}
 
-\item{rept}{the number of replications (default: 1).}
+\item{rept}{Number of replications (default: 1).}
 
-\item{radius}{initial value of learning radius .
-(default: the maximum distance of input toplology).}
+\item{radius}{Initial value of learning radius.}
 
-\item{lsteps}{the number of learning steps (default: 100).}
+\item{lsteps}{Number of learning steps (default: 100).}
 
 \item{stochastic}{GraphSOM clustering introduces stochasticity 
 for map update if \code{TRUE} (default: TRUE).}
 
-\item{rmin}{the minimum value of scale factor 
+\item{rmin}{Minimum value of scale factor. 
 for the stochastic map update (default: 0.5).}
 
-\item{rmax}{the maximum value of scale factor 
+\item{rmax}{Maximum value of scale factor 
 for the stochastic map update (default: 1.0).}
 
-\item{nmin}{the minimum number of genes can be analyzed.}
+\item{nmin}{Minimum number of genes can be analyzed.}
 
-\item{nmax}{the maximum number of genes can be analyzed.}
+\item{nmax}{Maximum number of genes can be analyzed.}
 
-\item{map_method}{map initialization method. 
+\item{map_method}{Map initialization method. 
 The map vector is initilaized 
 by input learning data if 'sample' is selected.
 Otherwise, it is initialized uniformly random 
@@ -57,9 +57,11 @@ it is set as BMU ('fill').
 Otherwise, the most similar unit to input data is 
 selected as BMU (default: 'min').}
 
-\item{seed}{random seed}
+\item{coef}{Coefficient of ARI for score computation.}
 
-\item{coef}{coefficient of ARI for score computation.}
+\item{swap}{Logical value determins whether to swap domains or not (default: TRUE)}
+
+\item{seed}{Random seed.}
 }
 \value{
 espresso object

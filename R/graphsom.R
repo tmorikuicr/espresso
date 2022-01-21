@@ -1,10 +1,10 @@
 # =============================================================================
-#' @title Initialize map by uniformly distributed random variables
+#' @title Initialize map by uniformly distributed random variables.
 #' @description This function initializes map 
 #'              by generating uniformly random values.
-#' @param obj espresso object
+#' @param obj The \code{espresso} object
 #' @importFrom stats runif
-#' @return espresso object
+#' @return \code{espresso} object
 #' 
 .initMapByRandom <- function(obj) {
   n <- nrow(obj@topology)
@@ -30,11 +30,11 @@
 }
 
 # =============================================================================
-#' @title Initialize map by input samples
+#' @title Initialize map by input samples.
 #' @description This function initializes map 
 #'              by values of randomly selected samples.
-#' @param obj espresso object
-#' @return espresso object
+#' @param obj The \code{espresso} object.
+#' @return \code{espresso} object
 #' 
 .initMapBySamples <- function(obj) {
   n <- nrow(obj@topology)
@@ -57,10 +57,10 @@
 }
 
 # =============================================================================
-#' @title Initialize Best Matching Units (BMUs)
+#' @title Initialize the best matching units (BMUs).
 #' @description This function initializes BMUs.
-#' @param obj espresso object
-#' @return espresso object
+#' @param obj The \code{espresso} object.
+#' @return \code{espresso} object
 #' 
 .initBMU <- function(obj) {
   n <- nrow(obj@topology)
@@ -81,38 +81,39 @@
 }
 
 # =============================================================================
-#' @title Initialize an espresso object
+#' @title Initialize an \code{espresso} object.
 #' @description This function initializes an espresso object 
 #'              for GraphSOM clustering.
-#' @param obj espresso object.
-#' @param gset vector of genes
-#' @param radius initial value of learning radius 
+#' @param obj The \code{espresso} object.
+#' @param gset Gene set.
+#' @param radius Initial value of learning radius 
 #'               (default: the maximum distance of input toplology).
-#' @param lsteps the number of learning steps.
-#' @param stochastic if \code{stochastic = TRUE}, 
+#' @param lsteps Number of learning steps.
+#' @param stochastic If \code{stochastic = TRUE}, 
 #'                   GraphSOM clustering introduces stochasticity 
 #'                  for map update (default: TRUE).
-#' @param rmin the minimum value of scale factor for the stochastic map update.
-#' @param rmax the maximum value of scale factor for the stochastic map update.
-#' @param map_method map initialization method.
+#' @param rmin Minimum value of scale factor for the stochastic map update.
+#' @param rmax Maximum value of scale factor for the stochastic map update.
+#' @param map_method Map initialization method.
 #'                   The map vector is initilaized 
 #'                   by input data if 'sample' is selected. 
 #'                   Otherwise, it is initialized by 
 #'                   uniformly distributed random values (default: 'sample'). 
-#' @param bmu_method bmu selection method.
+#' @param bmu_method BMU selection method.
 #'                   If the unit adjacent to the BMU candidate is empty,
 #'                   it is set as BMU ('fill'). 
 #'                   Otherwise, the most similar unit to input data 
 #'                   is selected as BMU (default: 'min').
-#' @param coef coefficient of ARI for score computation.
-#' @param nmin the minimum number of genes can be analyzed.
-#' @param nmax the maximum number of genes can be analyzed.
-#' @return espresso object
+#' @param coef Coefficient of ARI for score computation.
+#' @param nmin Minimum number of genes can be analyzed.
+#' @param nmax Maximum number of genes can be analyzed.
+#' @param swap Logical value determins whether to swap domains or not (default: TRUE)
+#' @return \code{espresso} object
 #' @importFrom igraph graph.adjacency
 #' @importFrom igraph shortest.paths
 #' 
 .initGraphSOM <- function(obj, gset, radius, lsteps, stochastic, rmin, rmax,
-                          map_method, bmu_method, coef, nmin, nmax) {
+                          map_method, bmu_method, coef, nmin, nmax, swap) {
   obj@dist <- shortest.paths(graph.adjacency(obj@topology))
   if (is.null(radius)) {
     if (max(obj@dist) == Inf) {
@@ -124,7 +125,6 @@
   } else {
     obj@radius <- radius
   }
-
   obj@lsteps <- as.integer(lsteps)
   obj@stochastic <- stochastic
   obj@rmin <- rmin
@@ -134,8 +134,8 @@
   } else if (map_method == "sample") {
     obj@map_method <- "sample"
   } else {
-    warning(paste0("map_method = '", map_method, "' is invalid. The 'random' is forced use."))
-    obj@map_method <- "random"
+    warning(paste0("map_method = '", map_method, "' is invalid. The 'sample' is forced use."))
+    obj@map_method <- "sample"
   }
   if (bmu_method == "min") {
     obj@bmu_method <- "min"
@@ -145,7 +145,6 @@
     warning(paste0("bmu_method = '", bmu_method, "' is invalid. The 'min' is forced use."))
     obj@map_method <- "min"
   }
-
   obj@coef <- coef
   obj@nmin <- as.integer(nmin)
   if (is.null(nmax)) {
@@ -153,13 +152,18 @@
   } else {
     obj@nmax <- as.integer(nmax)
   }
+  if (swap == TRUE) {
+    obj@swap <- TRUE
+  } else {
+    obj@swap <- FALSE
+  }
   return(obj)
 }
 
 # =============================================================================
-#' @title Search the best matching units (BMU)
-#' @description This function searches the BMUs for each input sample.
-#' @param obj espresso object
+#' @title Search for the best matching units (BMU).
+#' @description This function searches for the BMUs for each input sample.
+#' @param obj The \code{espresso} object
 #' @return BMUs given as a matrix.
 #' 
 .searchBMUByMin <- function(obj) {
@@ -176,13 +180,13 @@
 }
 
 # =============================================================================
-#' @title Search the best matching units (BMU) by 'fill' method
-#' @description This function searches the BMUs for each input sample.
+#' @title Search for the best matching units (BMU) by 'fill' method.
+#' @description This function searches the for BMUs for each input sample.
 #'              In this function, deifferent from \code{.searchBMUByMin}, 
 #'              if the adjacent units of the most similar unit are empty,
 #'              one of them is selected as BMU.
-#' @param obj espresso object
-#' @param itr iteration number
+#' @param obj The \code{espresso} object.
+#' @param itr Iteration number.
 #' @return BMUs given as a matrix.
 #' 
 .searchBMUByFill <- function(obj, itr) {
@@ -217,10 +221,10 @@
 }
 
 # =============================================================================
-#' @title Compute neighborhood
+#' @title Compute neighborhood.
 #' @description This function computes neighnorhood range.
-#' @param obj espresso object.
-#' @param itr iteration number.
+#' @param obj The \code{espresso} object.
+#' @param itr Iteration number.
 #' @return neighborhood range
 .computeNeighbor <- function(obj, itr) {
   sigma <- obj@radius * (1 - (itr - 1) / (obj@lsteps))
@@ -235,18 +239,18 @@
 }
 
 # =============================================================================
-#' @title Update map
+#' @title Update map.
 #' @description This function updates map according to 
 #'              the neighborhood function and the best matching units.
-#' @param obj espresso object
-#' @param h neighborhood range
-#' @param bmu the best matching units
+#' @param obj The \code{espresso} object
+#' @param h Neighborhood range.
+#' @param bmu Best matching units.
 #' @return updated map
 #' 
 .updateMap <- function(obj, h, bmu) {
   numer <- matrix(0, nrow = nrow(obj@topology), ncol = length(obj@gset))
   denom <- rep(0, nrow(obj@topology))
-  for(i in 1:nrow(obj@exprs_som)) {
+  for (i in 1:nrow(obj@exprs_som)) {
     exprs.i <- matrix(obj@exprs_som[i,], 
                       nrow = nrow(obj@topology), 
                       ncol = length(obj@gset), byrow = TRUE)
@@ -259,10 +263,65 @@
 }
 
 # =============================================================================
-#' @title Sub-function of learning input data
+#' @title Swap clusters.
+#' @description This function swap clusters on GraphSOM.
+#' @param obj The \code{espresso} object.
+#' @param bmu Best matching units.
+#' @param r Repetition number.
+#' @param l Learning step number.
+#' @return \code{espresso} object
+#' 
+#' 
+.swapClusters <- function(obj, bmu, r, l) {
+  d <- ceiling(max(obj@dist) * (0.001 / 1) ^ (l / obj@lsteps))
+  cand <- which(0 < obj@dist & obj@dist <= d, arr.ind = T)
+  orig_bmu <- obj@bmu
+  accs <- c()
+  idx <- c()
+  swapped_bmu <- list()
+  acc0 <- .computeAccuracy(obj, r, l)
+  for (i in 1:nrow(cand)) {
+    if (cand[i, 1] > cand[i, 2]) {
+      next
+    }
+    swap1 <- bmu == cand[i, 1]
+    swap2 <- bmu == cand[i, 2]
+    bmu_tmp <- bmu
+    bmu_tmp[swap1] <- cand[i, 2]
+    bmu_tmp[swap2] <- cand[i, 1]
+    swapped_bmu[[i]] <- as.vector(bmu_tmp)
+    obj@bmu[[r]][, as.character(l)] <- as.vector(bmu_tmp)
+    acc <- .computeAccuracy(obj, r, l)
+    accs <- c(accs, acc)
+    idx <- c(idx, i)
+    obj@bmu <- orig_bmu
+  }
+  if (var(accs) == 0) {
+    p <- accs / sum(accs)
+  } else {
+    z <- scale(accs)
+    fact = sqrt(length(z) / 2)
+    score <- exp(z)^fact
+    p <- score / sum(score)
+  }
+  selected_idx <- sample(idx, 1, prob = p)
+  acc1 <- accs[which(idx == selected_idx)]
+  t <- 0.001 ^ (l / (obj@lsteps - 1))
+  accept_p <- .calc_accept_prob(acc0, acc1, t)
+  if (runif(1) < accept_p) {
+    obj@bmu[[r]][, as.character(l)] <- as.vector(swapped_bmu[[selected_idx]])
+    map_tmp <- obj@map[[r]][cand[selected_idx, 1], ]
+    obj@map[[r]][cand[selected_idx, 1], ] <- obj@map[[r]][cand[selected_idx, 2], ]
+    obj@map[[r]][cand[selected_idx, 2], ] <- map_tmp
+  }
+  return(obj)
+}
+
+# =============================================================================
+#' @title Sub-function of learning input data.
 #' @description This sub-function trains GraphSOM with input learning data.
-#' @param obj espresso object
-#' @return espresso object
+#' @param obj The \code{espresso} object
+#' @return \code{espresso} object
 #' @import progress
 #' 
 .trainGraphSOM <- function(obj) {
@@ -298,6 +357,9 @@
         obj@bmu[[r]][,l] <- as.vector(bmu)
         h <- .computeNeighbor(obj, l)
         obj@map[[r]] <- .updateMap(obj, h, bmu)
+        if (obj@swap == TRUE) {
+          obj <- .swapClusters(obj, bmu, r, l - 1)
+        }
         pb$tick()
       }
       bmu <- .searchBMUByMin(obj)
@@ -311,6 +373,9 @@
         obj@bmu[[r]][,l] <- as.vector(bmu)
         h <- .computeNeighbor(obj, l)
         obj@map[[r]] <- .updateMap(obj, h, bmu)
+        if (obj@swap == TRUE) {
+          obj <- .swapClusters(obj, bmu, r, l - 1)
+        }
         pb$tick()
       }
       bmu <- .searchBMUByFill(obj)
@@ -321,16 +386,16 @@
 }
 
 # =============================================================================
-#' @title Plot convergence curve of GraphSOM clustering
+#' @title Plot convergence curve of GraphSOM clustering.
 #' @description This function outputs the convergence curve of 
 #'              the GraphSOM clustering. The x-axis and y-axis indicate 
 #'              the learning-steps and the number of cells 
 #'              that migrated between clusters.
-#' @param obj espresso obj.
-#' @param rept replication number.
-#' @param col line color.
-#' @param type line type.
-#' @param lwd line width.
+#' @param obj The \code{espresso} object.
+#' @param rept Repetition number.
+#' @param col Line color.
+#' @param type Line type.
+#' @param lwd Line width.
 #' @importFrom graphics plot
 #' @export
 #' 
@@ -354,46 +419,33 @@ plotConvCurve <- function(obj, rept = NULL,
 }
 
 # =============================================================================
-#' @title Compute prediction accuracy of GraphSOM clustering results
+#' @title Compute prediction accuracy of GraphSOM clustering results.
 #' @description This function computes prediction accuracy of 
 #'              GraphSOM clustering results.
-#' @param obj espresso object.
-#' @param r replication number.
+#' @param obj The \code{espresso} object.
+#' @param r Repetition number.
+#' @param l Learning step number.
 #' @return accuracy
 #' 
-.computeAccuracy <- function(obj, r) {
+.computeAccuracy <- function(obj, r, l) {
   score <- 0
   n_combs <- 0
   samples <- obj@ssets[[r]]
   n_samples <- length(samples)
-  for (s1 in 1:n_samples) {
-    sample1 <- samples[s1]
-    bmu1 <- obj@bmu[[r]][sample1, as.character(obj@lsteps)]
-    d1_pred <- obj@domain2name[bmu1, ]$name
-    d1_asgmt <- obj@asgmt[match(sample1, obj@asgmt$sample),]$domain
-    for (s2 in (s1 + 1):n_samples) {
-      if (s2 > n_samples) {
-        break
-      }
-      sample2 <- samples[s2]
-      bmu2 <- obj@bmu[[r]][sample2, as.character(obj@lsteps)]
-      d2_pred <- obj@domain2name[bmu2, ]$name
-      d2_asgmt <- obj@asgmt[match(sample2, obj@asgmt$sample), ]$domain
-      if (obj@topology[d1_pred, d2_pred] == obj@topology[d1_asgmt, d2_asgmt]) {
-        score <- score + 1
-      }
-      n_combs <- n_combs + 1
-    }
-  }
+  bmu <- obj@bmu[[r]][, as.character(l)]
+  pred <- obj@domain2name[bmu, ]$name
+  asgmt <- obj@asgmt[match(samples, obj@asgmt$sample), ]$domain
+  score <- sum(obj@topology[pred, pred] == obj@topology[asgmt, asgmt]) - n_samples
+  n_combs <- n_samples ^ 2 - n_samples
   acc <- score / n_combs
   return(acc)
 }
 
 # =============================================================================
-#' @title Compute adjusted rand index (ARI)
+#' @title Compute adjusted rand index (ARI).
 #' @description This function computes ARI.
-#' @param obj espresso object.
-#' @param r replication number
+#' @param obj The \code{espresso} object.
+#' @param r Repetition number.
 #' @importFrom mclust adjustedRandIndex
 #' @return adjusted rand index
 #' 
@@ -411,12 +463,12 @@ plotConvCurve <- function(obj, rept = NULL,
 }
 
 # =============================================================================
-#' @title Summarize GraphSOM clustering results
-#' @description This function computs the mean values of 
-#'              predicion accuracies and ARIs.
-#' @param obj espresso object.
+#' @title Summarize GraphSOM clustering results.
+#' @description This function computs the mean, variance, maximum, and minimum 
+#'              of scores, predicion accuracies and ARIs.
+#' @param obj The \code{espresso} object.
 #' @importFrom stats var
-#' @return espresso object
+#' @return \code{espresso} object
 #'
 .summarizeScores <- function(obj) {
   summary <- vector("list", length = 12)
@@ -445,10 +497,10 @@ plotConvCurve <- function(obj, rept = NULL,
 }
 
 # =============================================================================
-#' @title Sub-Function of evaluating GraphSOM clustering results
+#' @title Sub-Function of evaluating GraphSOM clustering results.
 #' @description This sub-function evaluates GraphSOM clustering results by 
 #'              prediction accuracy and adjusted rand index (ARI).
-#' @param obj espresso object.
+#' @param obj The \code{espresso} object.
 #' @return espresso object
 #' @import progress
 #' 
@@ -461,7 +513,7 @@ plotConvCurve <- function(obj, rept = NULL,
   rownames(score) <- paste('rept.', 1:obj@rept, sep = '')
   colnames(score) <- c('score', 'acc', 'ari')
   for (r in 1:obj@rept) {
-    acc <- .computeAccuracy(obj, r)
+    acc <- .computeAccuracy(obj, r, obj@lsteps)
     ari <- .computeARI(obj, r)
     s <- acc + obj@coef * ari
     score[r, 'score'] <- s
@@ -474,13 +526,13 @@ plotConvCurve <- function(obj, rept = NULL,
 }
 
 # =============================================================================
-#' @title Select samples randomly for down sampling
+#' @title Select samples randomly for down sampling.
 #' @description This function randomly select samples 
 #'              from each domain for the purpose of down sampling.
-#' @param obj espresso object.
-#' @param nsamples the number of samples to be selected from each domain.
-#' @param rept the number of replications.
-#' @return espresso object
+#' @param obj The \code{espresso} object.
+#' @param nsamples Number of samples to be selected from each domain.
+#' @param rept Number of replications.
+#' @return \code{espresso} object
 #' 
 .genSampleSets <- function(obj, nsamples, rept) {
   domains <- sort(unique(obj@asgmt$domain))
@@ -502,23 +554,23 @@ plotConvCurve <- function(obj, rept = NULL,
   return(obj)
 }
 
-
 # =============================================================================
-#' @title Initialize setting for GraohSOM clustering
+#' @title Initialize settings for GraohSOM clustering.
 #' @description This function initializes the setting for GraphSOM clustering
-#' @param obj espresso object
-#' @param nsamples the number of samples of each domain.
-#' @param rept the number of replications (default: 1).
-#' @param radius initial value of learning radius .
-#'               (default: the maximum distance of input toplology).
-#' @param lsteps the number of learning steps (default: 100).
+#' @param obj The \code{espresso} object.
+#' @param nsamples Number of samples of each domain.
+#' @param rept Number of replications (default: 1).
+#' @param radius Initial value of learning radius.
+#' @param lsteps Number of learning steps (default: 100).
 #' @param stochastic GraphSOM clustering introduces stochasticity 
 #'                   for map update if \code{TRUE} (default: TRUE).
-#' @param rmin the minimum value of scale factor 
+#' @param rmin Minimum value of scale factor. 
 #'             for the stochastic map update (default: 0.5).
-#' @param rmax the maximum value of scale factor 
+#' @param rmax Maximum value of scale factor 
 #'             for the stochastic map update (default: 1.0).
-#' @param map_method map initialization method. 
+#' @param nmin Minimum number of genes can be analyzed.
+#' @param nmax Maximum number of genes can be analyzed.
+#' @param map_method Map initialization method. 
 #'                   The map vector is initilaized 
 #'                   by input learning data if 'sample' is selected.
 #'                   Otherwise, it is initialized uniformly random 
@@ -527,43 +579,41 @@ plotConvCurve <- function(obj, rept = NULL,
 #'                   it is set as BMU ('fill'). 
 #'                   Otherwise, the most similar unit to input data is 
 #'                   selected as BMU (default: 'min').
-#' @param coef coefficient of ARI for score computation.
-#' @param nmin the minimum number of genes can be analyzed.
-#' @param nmax the maximum number of genes can be analyzed.
-#' @param seed random seed
+#' @param coef Coefficient of ARI for score computation.
+#' @param swap Logical value determins whether to swap domains or not (default: TRUE)
+#' @param seed Random seed.
 #' @return espresso object
 #' @export
 #' 
 initGraphSOM <- function(obj, nsamples = NULL, rept = 1, 
                          radius = NULL, lsteps = 100, 
                          stochastic = TRUE, rmin = 0.5, rmax = 1.0, nmin = 1, nmax = NULL,
-                         map_method = "sample", bmu_method = "min", seed = 0, coef = 1.0) {
-  
+                         map_method = "sample", bmu_method = "min", coef = 1.0, swap = TRUE, seed = NULL) {
+  if (!is.null(seed)) {
+    set.seed(as.numeric(seed))
+  }
   obj <- .genSampleSets(obj = obj, nsamples = nsamples, rept = as.integer(rept))
   obj <- .initGraphSOM(obj = obj, lsteps = as.integer(lsteps), radius = radius, 
                        stochastic = stochastic, rmin = rmin, rmax = rmax, 
                        nmin = nmin, nmax = nmax,
-                       map_method = map_method, bmu_method = bmu_method, coef = coef)
+                       map_method = map_method, bmu_method = bmu_method, coef = coef, swap = swap)
   return(obj)
 }
 
-
-
 # =============================================================================
-#' @title Run GraphSOM clustering
-#' @description This function execute GraohSOM clustering
-#' @param obj espresso object.
-#' @param gset vector of genes
-#' @param seed random seed
-#' @param verbose whether to show messages
-#' @return espresso object
+#' @title Run GraphSOM clustering.
+#' @description This function executes GraohSOM clustering.
+#' @param obj The \code{espresso} object.
+#' @param gset Gene set.
+#' @param seed Random seed.
+#' @param verbose Whether to show messages.
+#' @return \code{espresso} object
 #' @export 
 #' 
-graphSOM <- function(obj, gset = NULL, seed = 0, verbose = TRUE) {
+graphSOM <- function(obj, gset = NULL, seed = NULL, verbose = TRUE) {
   if (!is.null(seed)) {
     set.seed(seed)
   }
- 
   if (!is.null(gset)) {
     obj@gset <- gset[!is.na(match(gset, colnames(obj@exprs)))]
     if (length(obj@gset) != length(gset)) {

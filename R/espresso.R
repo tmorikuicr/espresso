@@ -2,34 +2,36 @@
 #' 
 #' Define a GraphSOM object to be trained.
 #' 
-#' @slot exprs expression matrix (row: samples, col: features).
-#' @slot exprs_som data matrix for graphSOM computation (row: samples, col: features).
-#' @slot rept_som repeat number for GraphSOM.
-#' @slot topology adjacent matrix representing a domain toplology.
-#' @slot dist distance matrix corresponding to \code{topology}.
-#' @slot map map vectors given as a matrix.
-#' @slot map_method map initialization method.
-#' @slot radius initial value of learning radius (default: the maximum distance of an input toplology).
-#' @slot lstep the number of learning steps (default: #sample * 2).
-#' @slot rept the number of repeats for GraphSOM clustering.
-#' @slot bmu the best matchiing units through the learnig steps.
-#' @slot bmu_method bmu selection method.
-#' @slot stochastic if \code{stochastic = TRUE}, the stochastic strategy is introduced to map update.
-#' @slot rmin the minimum value of scale factor for the stochastic map update (default: 0.5). 
+#' @slot exprs Expression matrix (row: samples, col: features).
+#' @slot exprs_som Data matrix for graphSOM computation (row: samples, col: features).
+#' @slot rept_som Repeat number for GraphSOM clustering.
+#' @slot topology Adjacent matrix representing the toplology of domains.
+#' @slot dist Distance matrix corresponding to \code{topology}.
+#' @slot map Values of the map's vector given by a matrix.
+#' @slot map_method Method of map initialization.
+#' @slot radius Initial value of learning radius.
+#' @slot lsteps Number of learning steps.
+#' @slot rept Number of repeats for GraphSOM clustering.
+#' @slot bmu Best matchiing units (BMU) through the learnig steps.
+#' @slot bmu_method BMU selection method.
+#' @slot stochastic If \code{stochastic = TRUE}, the stochastic strategy is introduced to map update.
+#' @slot rmin Minimum value of scale factor for the stochastic map update. 
 #'            If \code{stochastic = FALSE}, \code{rmin} is ignored.
-#' @slot rmax the maximum value of scale factor for the stochastic map update (default: 1.0). 
+#' @slot rmax Maximum value of scale factor for the stochastic map update. 
 #'            If \code{stochastic = FALSE}, \code{rmax} is ignored.
-#' @slot domain2name corresponding table between domain IDs and their nemaes.
-#' @slot gset feature gene set.
-#' @slot ssets sample sets.
-#' @slot asgmt domain assignment.
-#' @slot score GraphSOM clustering results.
-#' @slot summary summary of GraphSOM clustering results.
-#' @slot mcmc history of MCMC results.
-#' @slot seed random seed.
-#' @slot coef coefficient of ARI for score computation.
-#' @slot nmin the minimum number of genes can be analyzed.
-#' @slot nmax the maximum number of genes can be analyzed.
+#' @slot domain2name Data frame indicating the domain IDs and their names.
+#' @slot gset Feature gene set.
+#' @slot ssets Sample sets.
+#' @slot asgmt Domain assignment.
+#' @slot score Score of GraphSOM clustering results.
+#' @slot summary Summary of GraphSOM clustering results.
+#' @slot mcmc History of replica exchange MCMC results.
+#' @slot seed Random seed.
+#' @slot coef Coefficient of ARI for score computation.
+#' @slot nmin Minimum number of genes can be analyzed.
+#' @slot nmax Maximum number of genes can be analyzed.
+#' @slot swap Logical value determins whether to swap domains or not.
+#' @slot umap UMAP result.
 #' 
 Espresso <- setClass("Espresso",
          slots = list(
@@ -58,7 +60,9 @@ Espresso <- setClass("Espresso",
            seed = 'numeric',
            coef = 'numeric',
            nmin = 'integer',
-           nmax = 'integer'
+           nmax = 'integer',
+           swap = 'logical',
+           umap = 'matrix'
          ), 
          prototype = list(
            exprs = NULL,
@@ -86,6 +90,8 @@ Espresso <- setClass("Espresso",
            seed = NULL,
            coef = NULL,
            nmin = NULL,
-           nmax = NULL
+           nmax = NULL,
+           swap = NULL,
+           umap = NULL
          )
 )

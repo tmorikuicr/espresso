@@ -11,58 +11,62 @@ Define a GraphSOM object to be trained.
 \section{Slots}{
 
 \describe{
-\item{\code{exprs}}{expression matrix (row: samples, col: features).}
+\item{\code{exprs}}{Expression matrix (row: samples, col: features).}
 
-\item{\code{exprs_som}}{data matrix for graphSOM computation (row: samples, col: features).}
+\item{\code{exprs_som}}{Data matrix for graphSOM computation (row: samples, col: features).}
 
-\item{\code{rept_som}}{repeat number for GraphSOM.}
+\item{\code{rept_som}}{Repeat number for GraphSOM clustering.}
 
-\item{\code{topology}}{adjacent matrix representing a domain toplology.}
+\item{\code{topology}}{Adjacent matrix representing the toplology of domains.}
 
-\item{\code{dist}}{distance matrix corresponding to \code{topology}.}
+\item{\code{dist}}{Distance matrix corresponding to \code{topology}.}
 
-\item{\code{map}}{map vectors given as a matrix.}
+\item{\code{map}}{Values of the map's vector given by a matrix.}
 
-\item{\code{map_method}}{map initialization method.}
+\item{\code{map_method}}{Method of map initialization.}
 
-\item{\code{radius}}{initial value of learning radius (default: the maximum distance of an input toplology).}
+\item{\code{radius}}{Initial value of learning radius.}
 
-\item{\code{lstep}}{the number of learning steps (default: #sample * 2).}
+\item{\code{lsteps}}{Number of learning steps.}
 
-\item{\code{rept}}{the number of repeats for GraphSOM clustering.}
+\item{\code{rept}}{Number of repeats for GraphSOM clustering.}
 
-\item{\code{bmu}}{the best matchiing units through the learnig steps.}
+\item{\code{bmu}}{Best matchiing units (BMU) through the learnig steps.}
 
-\item{\code{bmu_method}}{bmu selection method.}
+\item{\code{bmu_method}}{BMU selection method.}
 
-\item{\code{stochastic}}{if \code{stochastic = TRUE}, the stochastic strategy is introduced to map update.}
+\item{\code{stochastic}}{If \code{stochastic = TRUE}, the stochastic strategy is introduced to map update.}
 
-\item{\code{rmin}}{the minimum value of scale factor for the stochastic map update (default: 0.5). 
+\item{\code{rmin}}{Minimum value of scale factor for the stochastic map update. 
 If \code{stochastic = FALSE}, \code{rmin} is ignored.}
 
-\item{\code{rmax}}{the maximum value of scale factor for the stochastic map update (default: 1.0). 
+\item{\code{rmax}}{Maximum value of scale factor for the stochastic map update. 
 If \code{stochastic = FALSE}, \code{rmax} is ignored.}
 
-\item{\code{domain2name}}{corresponding table between domain IDs and their nemaes.}
+\item{\code{domain2name}}{Data frame indicating the domain IDs and their names.}
 
-\item{\code{gset}}{feature gene set.}
+\item{\code{gset}}{Feature gene set.}
 
-\item{\code{ssets}}{sample sets.}
+\item{\code{ssets}}{Sample sets.}
 
-\item{\code{asgmt}}{domain assignment.}
+\item{\code{asgmt}}{Domain assignment.}
 
-\item{\code{score}}{GraphSOM clustering results.}
+\item{\code{score}}{Score of GraphSOM clustering results.}
 
-\item{\code{summary}}{summary of GraphSOM clustering results.}
+\item{\code{summary}}{Summary of GraphSOM clustering results.}
 
-\item{\code{mcmc}}{history of MCMC results.}
+\item{\code{mcmc}}{History of replica exchange MCMC results.}
 
-\item{\code{seed}}{random seed.}
+\item{\code{seed}}{Random seed.}
 
-\item{\code{coef}}{coefficient of ARI for score computation.}
+\item{\code{coef}}{Coefficient of ARI for score computation.}
 
-\item{\code{nmin}}{the minimum number of genes can be analyzed.}
+\item{\code{nmin}}{Minimum number of genes can be analyzed.}
 
-\item{\code{nmax}}{the maximum number of genes can be analyzed.}
+\item{\code{nmax}}{Maximum number of genes can be analyzed.}
+
+\item{\code{swap}}{Logical value determins whether to swap domains or not.}
+
+\item{\code{umap}}{UMAP result.}
 }}
 
