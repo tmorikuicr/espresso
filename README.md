@@ -24,3 +24,7 @@ install_github("tmorikuicr/espresso")
 ## Usage
 Refer to the following documentation for the usage of `espresso` package.  
 [Vignette](https://tmorikuicr.github.io/espresso/)
+
+## Data
+01-Mar-2022: [expression data](https://sunflower.kuicr.kyoto-u.ac.jp/~tmori/donwloads/espresso_data.tar.gz) available.
+
