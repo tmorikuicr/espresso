@@ -31,4 +31,4 @@ Refer to the following documentation for the usage of `espresso` package.
 ## Citing
 To cite your use of the espresso software, please reference the following paper:
 
-1. Tomoya Mori, Toshiro Takase, Kuan-Chun Lan, Junko Yamane, Cantas Alev, Kenji Osafune, Jun Yamashita, and Wataru Fujibuchi. eSPRESSO: a spatial self-organizing-map clustering method for single-cell transcriptomes of various tissue structure using graph-based networks. bioRxiv. doi: http://doi.org/10.1101/2020.12.31.424948.
+* Tomoya Mori, Toshiro Takase, Kuan-Chun Lan, Junko Yamane, Cantas Alev, Kenji Osafune, Jun Yamashita, and Wataru Fujibuchi. eSPRESSO: a spatial self-organizing-map clustering method for single-cell transcriptomes of various tissue structure using graph-based networks. bioRxiv. doi: http://doi.org/10.1101/2020.12.31.424948.
