@@ -26,7 +26,7 @@ Refer to the following documentation for the usage of `espresso` package.
 [Vignette](https://tmorikuicr.github.io/espresso/)
 
 ## Data availability
-16-Mar-2022: [espresso data (12KB)](https://sunflower.kuicr.kyoto-u.ac.jp/~tmori/downloads/espresso_data.tar.gz) available.
+16-Mar-2022: [espresso data](https://sunflower.kuicr.kyoto-u.ac.jp/~tmori/downloads/espresso_data.tar.gz) available.
 
 ## Citing
 To cite your use of the espresso software, please reference the following paper:
