@@ -26,7 +26,7 @@ Refer to the following documentation for the usage of `espresso` package.
 21-Jan-2022: [Vignette](https://tmorikuicr.github.io/espresso/)
 
 ## Data and code availability
-Preprocessing scripts to generate input data for espresso from raw gene expression data and example scripts of using espresso can be downloaded from the following:  
+Preprocessing scripts to generate input data for espresso from raw gene expression data and example scripts of using `espresso` can be downloaded from the following:  
 18-Mar-2022: [espresso data](https://sunflower.kuicr.kyoto-u.ac.jp/~tmori/downloads/espresso_data.tar.gz)
 
 ## Citing
