@@ -1,6 +1,6 @@
 ---
 title: "espresso"
-date: "21-Jan-2022: espresso 1.0.0 released."
+date: "31-Mar-2022: espresso 1.0.1 released."
 output:
   rmarkdown::html_vignette:
   toc: true
@@ -613,7 +613,9 @@ dev.off()
 __Note__
 
 When the exported format is 'pdf' or 'eps', and `rgl = TRUE`, 
-the legend information is not printed due to the design of `rgl` package.
+the legend information is not printed due to the design of `rgl` package. 
+In addition, it often takes much time to draw UMAP plot as a PDF file when 
+the number of samples is large. In such case, please output as a PNG file.
 
 
 ### Other options of UMAP plotting
@@ -706,15 +708,15 @@ knitr::include_graphics("umap.all.png")
 
 ## Appendix
 
-### Run `graphSOM` and `rxmcmc` of previous version (0.2.17)
-In `espresso` of version 0.2.17 or earlier, the reproducibility between the results of `graphSOM` and `rxmcmc` was not guaranteed, and a random number generation method different from version 1.0.0 or later was employed. The followings are examples of the way to run `graphSOM` and `rxmcmc` of version 0.2.17.
+### Run `graphSOM` and `rxmcmc` of previous version (0)
+In `espresso` of version 0, the reproducibility between the results of `graphSOM` and `rxmcmc` was not guaranteed, and a random number generation method different from version 1.0.0 or later was employed. The followings are examples of the way to run `graphSOM` and `rxmcmc` of version 0.
 
 ```{r, eval = FALSE}
-graphSOM(eobj, gset = fgenes, seed = 0, version = "0.2.17")
+graphSOM(eobj, gset = fgenes, seed = 0, version = "0")
 ```
 
 ```{r, eval = FALSE}
-rxmcmc(eobj, gset = fgenes, itr = 2, n_ex = 5, n_repl = 4, n_cl = 4, seed = 0, version = "0.2.17")
+rxmcmc(eobj, gset = fgenes, itr = 2, n_ex = 5, n_repl = 4, n_cl = 4, seed = 0, version = "0")
 ```
 
 ### Get gene description via biomaRt

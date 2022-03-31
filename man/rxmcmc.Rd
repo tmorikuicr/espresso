@@ -42,7 +42,7 @@ rxmcmc(
 
 \item{fact}{Scaling factor for computing selection probability.}
 
-\item{version}{Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0.2.17")}
+\item{version}{Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0")}
 }
 \value{
 \code{espresso} object

@@ -1,3 +1,9 @@
+## 1.0.1
+* Modify the argument name from `version="0.2.17` to `version="0"` to run SOM in the previous version.
+* Default output format of `plotUMAP` is changed from "pdf" to "png".
+* Modify labels of legend in distance map to discrete ones.
+
+
 ## 1.0.0
 * Add an option `version` to `graphSOM` and `rxmcmc` functions in order to enable us to perform SOM computations based on the previous version (= 0.2.17).
 

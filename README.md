@@ -1,6 +1,6 @@
 # eSPRESSO
 
-21-Jan-2022: espresso 1.0.0 released.
+31-Mar-2022: espresso 1.0.1 released.
 
 <br/>
 

@@ -207,7 +207,7 @@
 #' @param n_repl Number of replicas (default: \code{detectCores()}).
 #' @param n_ig Number of initial genes randomly selected for MCMC.
 #' @param fact Scaling factor for computing selection probability.
-#' @param version Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0.2.17")
+#' @param version Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0")
 #' @import doParallel
 #' @import parallel
 #' @import foreach
@@ -226,7 +226,7 @@ rxmcmc <- function(obj, gset = NULL, temp = 1.0, itr = 10, k = 1, seed = NULL,
     warning("Input `gset` to be optimized.")
     return(obj)
   }
-  if (version != "0.2.17" && !is.null(version)) {
+  if (version != "0" && !is.null(version)) {
     stop(paste("version", version, "is not available."))
     return(obj)
   }
@@ -297,9 +297,9 @@ rxmcmc <- function(obj, gset = NULL, temp = 1.0, itr = 10, k = 1, seed = NULL,
           score_tmp[[l]] <- res_tmp@score
           summary_tmp[[l]] <- res_tmp@summary
         }
-      } else if (version == "0.2.17"){
+      } else if (version == "0"){
         for (l in 1:n_sets) {
-          res_tmp <- graphSOM(obj, gset = cand_sets[[l]], verbose = FALSE, version = "0.2.17")
+          res_tmp <- graphSOM(obj, gset = cand_sets[[l]], verbose = FALSE, version = "0")
           res[l, ] <- c(as.numeric(unlist(res_tmp@summary)), length(cand_sets[[l]]))
           map_tmp[[l]] <- res_tmp@map
           bmu_tmp[[l]] <- res_tmp@bmu

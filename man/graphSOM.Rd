@@ -15,7 +15,7 @@ graphSOM(obj, gset = NULL, seed = NULL, verbose = TRUE, version = NULL)
 
 \item{verbose}{Whether to show messages.}
 
-\item{version}{Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0.2.17")}
+\item{version}{Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0")}
 }
 \value{
 \code{espresso} object

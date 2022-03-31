@@ -276,10 +276,10 @@ knitr::include_graphics("umap_3D_color3.png")
 knitr::include_graphics("umap.all.png")
 
 ## ---- eval = FALSE------------------------------------------------------------
-#  graphSOM(eobj, gset = fgenes, seed = 0, version = "0.2.17")
+#  graphSOM(eobj, gset = fgenes, seed = 0, version = "0")
 
 ## ---- eval = FALSE------------------------------------------------------------
-#  rxmcmc(eobj, gset = fgenes, itr = 2, n_ex = 5, n_repl = 4, n_cl = 4, seed = 0, version = "0.2.17")
+#  rxmcmc(eobj, gset = fgenes, itr = 2, n_ex = 5, n_repl = 4, n_cl = 4, seed = 0, version = "0")
 
 ## ---- eval=FALSE--------------------------------------------------------------
 #  library(biomaRt)

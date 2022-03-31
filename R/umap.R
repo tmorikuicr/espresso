@@ -149,7 +149,7 @@ runUMAP <- function(obj, umap_param = NULL, gset = NULL, seed = 0) {
 #' @importFrom scatterplot3d scatterplot3d
 #' @importFrom tagcloud smoothPalette
 #' @export
-plotUMAP <- function(obj, file = "umap.pdf", 
+plotUMAP <- function(obj, file = "umap.png", 
                      movie = FALSE, dir = ".",
                      mname = "movie",
                      seed = 0,

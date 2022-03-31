@@ -6,7 +6,7 @@
 \usage{
 plotUMAP(
   obj,
-  file = "umap.pdf",
+  file = "umap.png",
   movie = FALSE,
   dir = ".",
   mname = "movie",

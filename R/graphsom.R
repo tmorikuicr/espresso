@@ -607,7 +607,7 @@ initGraphSOM <- function(obj, nsamples = NULL, rept = 1,
 #' @param gset Gene set.
 #' @param seed Random seed.
 #' @param verbose Whether to show messages.
-#' @param version Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0.2.17")
+#' @param version Character that specifies on which previous version GraphSOM computation should be performed. (e.g., "0")
 #' @return \code{espresso} object
 #' @export 
 #' 
@@ -616,7 +616,7 @@ graphSOM <- function(obj, gset = NULL, seed = NULL, verbose = TRUE, version = NU
     if (!is.null(seed)) {
       set.seed(seed, kind = "L'Ecuyer-CMRG")
     }
-  } else if (version == "0.2.17") {
+  } else if (version == "0") {
     if (!is.null(seed)) {
       set.seed(seed, kind = "Mersenne-Twister")
     }
